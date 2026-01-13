@@ -50,7 +50,7 @@ I am going to use the required technologies in the following ways.
 
 - **HTML** - Basic structure
 - **CSS** - Advanced graphics
-- **React** - Login functionality
+- **React** - Login functionality, Dice editing
 - **Service** - Accessing database and creating matches
 - **DB/Login** - Storing users' dice data
 - **WebSocket** - Showing recent matches, notification if your dice is rolled against
