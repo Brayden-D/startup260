@@ -19,7 +19,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 Users will be able to make custom dice and roll them against each other. Each user will have 21 pips to distribute among 6 faces.
 
-The gaol is to have users try to find the best dice to beat their peers. Users can choose which die to roll against, and their win/loss/draw ratio will be tracked. Both users do not need to be online in order for a match to be made: an online user will pull a different user's die from the database.
+The goal is to have users try to find the best dice to beat their peers. Users can choose which die to roll against, and their win/loss/draw ratio will be tracked. Both users do not need to be online in order for a match to be made: an online user will pull a different user's die from the database.
 
 ### Design
 
