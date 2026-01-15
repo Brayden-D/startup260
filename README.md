@@ -1,4 +1,4 @@
-# Your startup name here
+# Weighted Dice
 
 [My Notes](notes.md)
 
