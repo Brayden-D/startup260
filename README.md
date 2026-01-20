@@ -23,7 +23,7 @@ The goal is to have users try to find the best dice to beat their peers. Users c
 
 ### Design
 
-![Design image](facade.png)
+![Design image](images/facade.png)
 
 This is a (very) rough sketch of what the site will look like. Your dice and it's net are displayed, with the two most important buttons being front and center.
 
