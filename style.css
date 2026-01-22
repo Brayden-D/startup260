@@ -1,3 +1,8 @@
 .nowrap {
   white-space: nowrap;
 }
+
+button.bigbutton {
+    height: 50px;
+    width: 200px;
+}
