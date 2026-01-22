@@ -1,6 +1,7 @@
 <head>
     <title>dice</title>
     <link rel="icon" href="../images/icon.png">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <header>
@@ -8,15 +9,23 @@
             <td>
                 <h1>Weighted Dice</h1>
             </td>
-            <td style="text-align: right;"">
-                email:
-                <input type="text" placeholder="your@email.com" />
+            <td style="text-align: right;">
+                <span class = "nowrap">
+                    email:
+                    <input type="text" placeholder="your@email.com" />
+                </span>
                 &nbsp;&nbsp;&nbsp;
-                password:
-                <input type="password" placeholder="password" />
+
+                <span class="nowrap">
+                    password:
+                    <input type="password" placeholder="password" />
+                </span>
                 &nbsp;&nbsp;&nbsp;
-                <button type="submit">Login</button>
-                <button type="submit">Create</button>
+
+                <span class="nowrap">
+                    <button type="submit">Login</button>
+                    <button type="submit">Create</button>
+                </span>
                 <br>
                 Logged in as [placeholder]
             </td>       
