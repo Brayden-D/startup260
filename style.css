@@ -2,6 +2,10 @@
   white-space: nowrap;
 }
 
+.center {
+    text-align: center;
+}
+
 button.bigbutton {
     height: 50px;
     width: 200px;
