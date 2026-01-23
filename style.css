@@ -4,6 +4,24 @@
 
 .center {
     text-align: center;
+    display: flex;
+    justify-content: center; 
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  padding: 0;
+}
+
+td {
+  padding: 3px;
+}
+
+.basicborder {
+  border: 1px solid black;
 }
 
 button.bigbutton {
