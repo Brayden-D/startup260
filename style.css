@@ -4,20 +4,20 @@
 
 .center {
     text-align: center;
-    display: flex;
-    justify-content: center; 
+    vertical-align: middle;
 }
 
 table {
   border-collapse: collapse;
 }
 
-th {
-  padding: 0;
+td {
+  
 }
 
-td {
-  padding: 3px;
+td.square {
+  width: clamp(30px, 5vw, 200px);
+  height: clamp(30px, 5vw, 200px);
 }
 
 .basicborder {
