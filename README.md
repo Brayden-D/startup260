@@ -65,15 +65,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [X] **HTML pages** - Main, About, and Leaderboard are separate pages
+- [X] **Proper HTML element usage** - Usage of header, footer, aside, br, img, etc
+- [X] **Links** - both internal links (between pages) and an external link (to wikipedia)
+- [X] **Text** - About page, button labels
+- [X] **3rd party API placeholder** - random.org will be used for randomness
+- [X] **Images** - icon image on tab, dice image on about page
+- [X] **Login placeholder** - top left of main page
+- [X] **DB data placeholder** - leaderboards and dice storage
+- [X] **WebSocket placeholder** - notification panel on main page
 
 ## 🚀 CSS deliverable
 
