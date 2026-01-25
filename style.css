@@ -31,3 +31,11 @@ button.bigbutton {
     height: 50px;
     width: 200px;
 }
+
+aside.notifpanel {
+  position: fixed;
+  background-color: #fffecc;
+  width: 15%;
+  height: 50%;
+  left: 30px;
+}
