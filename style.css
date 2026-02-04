@@ -39,6 +39,10 @@ td.centertablecell {
 button.bigbutton {
     height: 50px;
     width: 200px;
+    border-radius: 20px;
+    border-width: 5px;
+    background-color: #7ab67b;
+    font-family: 'Roboto';
 }
 
 aside.notifpanel {
