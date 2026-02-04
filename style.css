@@ -55,7 +55,7 @@ td.centertablecell {
   padding-right: 10px;
 }
 
-aside.notifpanel {
+.notifpanel {
   position: fixed;
   background-color: rgb(245, 229, 186);
   width: 15%;
@@ -83,6 +83,21 @@ button.bigbutton {
     border-width: 5px;
     background-color: #7ab67b;
     font-family: 'Roboto';
+}
+
+a {
+  text-decoration: none;
+}
+
+span.linkbutton {
+  text-align: center;
+  background-color: tan;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+span.linkbutton:hover {
+  background-color: rgb(177, 153, 122);
 }
 
 div.notification {
@@ -226,7 +241,7 @@ div.notification {
 
 /* cube things */
 :root {
-  --cube-size: 20vmin;
+  --cube-size: clamp(25px, 18vmin, 200px);
   --half-cube: calc(var(--cube-size) / 2);
 }
 
@@ -279,31 +294,6 @@ div.notification {
 .scene:hover .cube {
   animation-duration: 2.5s;
 }
-
-
-/* debugging */
-.basicborder {
-  border: 1px solid black;
-}
-
-
-@keyframes spin {
-  from {
-    transform: translateZ(calc(-1 * var(--half-cube)))
-               rotateX(0deg)
-               rotateY(0deg);
-  }
-  to {
-    transform: translateZ(calc(-1 * var(--half-cube)))
-               rotateX(720deg)
-               rotateY(360deg);
-  }
-}
-
-.scene:hover .cube {
-  animation-duration: 2.5s;
-}
-
 
 /* debugging */
 .basicborder {
