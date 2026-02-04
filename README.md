@@ -79,12 +79,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Visually appealing colors and layout. No overflowing elements.** - I did not complete this part of the deliverable.
-- [ ] **Use of a CSS framework** - I did not complete this part of the deliverable.
-- [ ] **All visual elements styled using CSS** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing using flexbox and/or grid display** - I did not complete this part of the deliverable.
-- [ ] **Use of a imported font** - I did not complete this part of the deliverable.
-- [ ] **Use of different types of selectors including element, class, ID, and pseudo selectors** - I did not complete this part of the deliverable.
+- [X] **Visually appealing colors and layout. No overflowing elements.** - Consistent color scheme, things are contained
+- [X] **Use of a CSS framework** - Installed Bootstrap
+- [X] **All visual elements styled using CSS** - Everything looks better
+- [X] **Responsive to window resizing using flexbox and/or grid display** - things wrap and change size dynamically
+- [X] **Use of a imported font** - Imported Roboto
+- [X] **Use of different types of selectors including element, class, ID, and pseudo selectors** - SO many classes. like all of them. also hover
 
 ## 🚀 React part 1: Routing deliverable
 
