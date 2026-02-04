@@ -41,7 +41,7 @@ td.centertablecell {
 .header {
   background-color: tan; 
   width:100%; 
-  height: 60px;
+  min-height: 60px;
   border-bottom: 10px solid #75681c;
 }
 
@@ -54,6 +54,21 @@ td.centertablecell {
   padding-left: 10px;
   padding-right: 10px;
 }
+
+aside.notifpanel {
+  position: fixed;
+  background-color: rgb(245, 229, 186);
+  width: 15%;
+  height: 50%;
+  padding: 5px;
+  border: 3px solid tan;
+  border-radius: 5px;
+  box-sizing: border-box;
+
+  left: 20px;
+  top: 100px;
+}
+
 
 button.smallbutton {
   border: black solid 1px;
@@ -70,22 +85,26 @@ button.bigbutton {
     font-family: 'Roboto';
 }
 
-aside.notifpanel {
-  position: fixed;
-  background-color: rgb(245, 229, 186);
-  width: 15%;
-  height: 50%;
-
-  left: 30px;
-  top: 90px
+div.notification {
+  background-color: tan;
+  font-family: Roboto;
+  min-height: 25px;
+  width: 100%;
+  line-height: 25px;
+  padding: 3px;
+  box-sizing: border-box;
 }
 
 /* cube things */
+:root {
+  --cube-size: 20vmin;
+  --half-cube: calc(var(--cube-size) / 2);
+}
+
 .scene {
-  width: 200px;
-  height: 200px;
-  perspective: 600px;
-  border: 1px;
+  width: var(--cube-size);
+  height: var(--cube-size);
+  perspective: calc(var(--cube-size) * 3);
   margin: auto;
 }
 
@@ -94,61 +113,197 @@ aside.notifpanel {
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  transform: translateZ(-100px);
+  transform: translateZ(calc(-1 * var(--half-cube)));
+  animation: spin 18s linear infinite;
 }
 
 .cface {
   position: absolute;
-  width: 200px;
-  height: auto;
-  aspect-ratio: 1/1;
+  width: var(--cube-size);
+  aspect-ratio: 1 / 1;
 
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 
-.cf-front {
-  background-color: red;
-  transform: rotateY(0deg) translateZ(100px);
-}
-.cf-right {
-  background-color: yellow;
-  transform: rotateY(90deg) translateZ(100px);
-}
-.cf-back {
-  background-color: blue;
-  transform: rotateY(180deg) translateZ(100px);
-}
-.cf-left {
-  background-color: green;
-  transform: rotateY(-90deg) translateZ(100px);
-}
-.cf-top {
-  background-color: purple;
-  transform: rotateX(90deg) translateZ(100px);
-}
-.cf-bottom {
-  background-color: orange;
-  transform: rotateX(-90deg) translateZ(100px);
+.nowrap {
+  white-space: nowrap;
 }
 
-@keyframes spin {
-  from {
-    transform: translateZ(-100px) rotateX(0deg) rotateY(0deg);
-  }
-  to {
-    transform: translateZ(-100px) rotateX(720deg) rotateY(360deg);
-  }
+.center {
+  text-align: center;
+  vertical-align: middle;
+  justify-content: center;
+  align-items: center;
+}
+
+div.centerdiv {
+  display: flex;
+  justify-content: center;
+}
+
+.fill {
+  width: 100%;
+  height: 100%;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td.square {
+  width: clamp(30px, 5vw, 200px);
+  height: clamp(30px, 5vw, 200px);
+}
+
+td.centertablecell {
+  margin: auto;
+}
+
+.background {
+  background-image: url("../images/felt.png");
+  background-size: cover;
+  margin: 0px;
+}
+
+.header {
+  background-color: tan; 
+  width:100%; 
+  min-height: 60px;
+  border-bottom: 10px solid #75681c;
+}
+
+.footer {
+  position: fixed; 
+  bottom: 0; 
+  left: 0; 
+  width: 100%;
+  background-color: tan;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+aside.notifpanel {
+  position: fixed;
+  background-color: rgb(245, 229, 186);
+  width: 15%;
+  height: 50%;
+  padding: 5px;
+  border: 3px solid tan;
+  border-radius: 5px;
+  box-sizing: border-box;
+
+  left: 20px;
+  top: 90px
+}
+
+
+button.smallbutton {
+  border: black solid 1px;
+  border-radius: 10px;
+  width: 60px;
+}
+
+button.bigbutton {
+    height: 50px;
+    width: 200px;
+    border-radius: 20px;
+    border-width: 5px;
+    background-color: #7ab67b;
+    font-family: 'Roboto';
+}
+
+div.notification {
+  background-color: tan;
+  font-family: Roboto;
+  min-height: 25px;
+  width: 100%;
+  line-height: 25px;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+/* cube things */
+:root {
+  --cube-size: 20vmin;
+  --half-cube: calc(var(--cube-size) / 2);
+}
+
+.scene {
+  width: var(--cube-size);
+  height: var(--cube-size);
+  perspective: calc(var(--cube-size) * 3);
+  margin: auto;
 }
 
 .cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translateZ(calc(-1 * var(--half-cube)));
   animation: spin 18s linear infinite;
+}
+
+.cface {
+  position: absolute;
+  width: var(--cube-size);
+  aspect-ratio: 1 / 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cf-front  { background: red;    transform: rotateY(0deg)   translateZ(var(--half-cube)); }
+.cf-right  { background: yellow; transform: rotateY(90deg)  translateZ(var(--half-cube)); }
+.cf-back   { background: blue;   transform: rotateY(180deg) translateZ(var(--half-cube)); }
+.cf-left   { background: green;  transform: rotateY(-90deg) translateZ(var(--half-cube)); }
+.cf-top    { background: purple; transform: rotateX(90deg)  translateZ(var(--half-cube)); }
+.cf-bottom { background: orange; transform: rotateX(-90deg) translateZ(var(--half-cube)); }
+
+@keyframes spin {
+  from {
+    transform: translateZ(calc(-1 * var(--half-cube)))
+               rotateX(0deg)
+               rotateY(0deg);
+  }
+  to {
+    transform: translateZ(calc(-1 * var(--half-cube)))
+               rotateX(720deg)
+               rotateY(360deg);
+  }
 }
 
 .scene:hover .cube {
   animation-duration: 2.5s;
 }
+
+
+/* debugging */
+.basicborder {
+  border: 1px solid black;
+}
+
+
+@keyframes spin {
+  from {
+    transform: translateZ(calc(-1 * var(--half-cube)))
+               rotateX(0deg)
+               rotateY(0deg);
+  }
+  to {
+    transform: translateZ(calc(-1 * var(--half-cube)))
+               rotateX(720deg)
+               rotateY(360deg);
+  }
+}
+
+.scene:hover .cube {
+  animation-duration: 2.5s;
+}
+
 
 /* debugging */
 .basicborder {
