@@ -156,23 +156,4 @@
         </tr></table>
     </footer>
 
-    <script>
-        const cube = document.querySelector('.cube');
-        const faces = [
-            'show-right',
-            'show-back',
-            'show-left',
-            'show-top',
-            'show-bottom',
-            'show-front'
-        ];
-
-        let i = 0;
-        setInterval(() => {
-            cube.className = 'cube ' + faces[i % faces.length];
-            i++;
-        }, 2000);
-    </script>
-
-
 </body>
