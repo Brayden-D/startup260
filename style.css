@@ -57,7 +57,7 @@ td.centertablecell {
   padding-right: 10px;
 }
 
-.notif {
+.notifbox {
   position: fixed;
   left: 20px;
   top: 100px;
@@ -109,7 +109,7 @@ div.notification {
   min-height: 25px;
   width: 100%;
   line-height: 25px;
-  padding: 3px;
+  padding: 5px;
   box-sizing: border-box;
 }
 
