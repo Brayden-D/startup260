@@ -55,22 +55,34 @@
                     <table class = "center" style = "margin: auto;">
                         <tr>
                             <td></td>
-                            <td class = "square basicborder">1</td>
+                            <td>
+                                <img src = "../images/dice_faces/1.png" class = "fill">
+                            </td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td class = "square basicborder">3</td>
-                            <td class = "square basicborder">2</td>
-                            <td class = "square basicborder">4</td>
+                            <td>
+                                <img src = "../images/dice_faces/3.png" class = "fill">
+                            </td>
+                            <td>
+                                <img src = "../images/dice_faces/2.png" class = "fill">
+                            </td>
+                            <td>
+                                <img src = "../images/dice_faces/4.png" class = "fill">
+                            </td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td class = "square basicborder">6</td>
+                            <td>
+                                <img src = "../images/dice_faces/6.png" class = "fill">
+                            </td>
                             <td></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td class = "square basicborder">5</td>
+                            <td>
+                                <img src = "../images/dice_faces/5.png" class = "fill">
+                            </td>
                             <td></td>
                         </tr>
                     </table>
@@ -107,5 +119,24 @@
             </td>       
         </tr></table>
     </footer>
+
+    <script>
+        const cube = document.querySelector('.cube');
+        const faces = [
+            'show-front',
+            'show-right',
+            'show-back',
+            'show-left',
+            'show-top',
+            'show-bottom'
+        ];
+
+        let i = 0;
+        setInterval(() => {
+            cube.className = 'cube ' + faces[i % faces.length];
+            i++;
+        }, 1500);
+    </script>
+
 
 </body>
