@@ -50,7 +50,9 @@ aside.notifpanel {
   background-color: #fffecc;
   width: 15%;
   height: 50%;
+
   left: 30px;
+  top: 90px
 }
 
 /* cube things */
