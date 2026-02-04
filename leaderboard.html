@@ -2,8 +2,39 @@
     <title>dice</title>
     <link rel="icon" href="../images/icon.png">
     <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class = "background">
+
+    <header class = "header">
+        <table style="width: 100%;"><tr>
+            <td>
+                <h1 style = "padding-left: 20px; padding-top: 7px;" class = "nowrap">
+                    Weighted Dice
+                </h1>
+            </td>
+            <td style="text-align: right; padding-right: 10px;">
+                <span class = "nowrap">
+                    Username:
+                    <input type="text" placeholder="username" />
+                </span>
+                &nbsp;&nbsp;
+
+                <span class="nowrap">
+                    Password:
+                    <input type="password" placeholder="password" />
+                </span>
+
+                <span class="nowrap">
+                    <button type="submit" class = "smallbutton">Login</button>
+                    <button type="submit" class = "smallbutton">Create</button>
+                </span>
+                <div style = "height: 5px;"></div>
+                Logged in as [placeholder]
+            </td>       
+        </tr></table>
+    </header>
+
     <header class = "center">
         <h1>Leaderboard</h1>
     </header>
@@ -19,16 +50,33 @@
         </div>
     </main>
 
-    <footer style="position: fixed; bottom: 0; left: 0; width: 100%;">
+    <footer class = "footer">
         <table style="width: 100%;"><tr>
             <td style="width: 50%;">
                 Author(s): Brayden Dickerson
                 <br>
+                <img src = "../images/github.png" style = height:15px>
                 <a href="https://github.com/Brayden-D/startup260/tree/main">Github</a> 
             </td>
             <td style="text-align: right; width: 50%;">
-                <a href="index.html">Back</a>
+                <a href = "index.html">
+                    <span class = "linkbutton">
+                        Home
+                    </span>
+                </a>
                 &nbsp;
+                <a href = "leaderboard.html">
+                    <span class = "linkbutton">
+                        Leaderboard
+                    </span>
+                </a>
+                &nbsp;
+                <a href = "about.html">
+                    <span class = "linkbutton">
+                        About
+                    </span>
+                </a>
+                &nbsp;&nbsp;&nbsp;
             </td>       
         </tr></table>
     </footer>
