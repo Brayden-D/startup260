@@ -11,7 +11,9 @@
 
 div.centerdiv {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .fill {
@@ -55,20 +57,21 @@ td.centertablecell {
   padding-right: 10px;
 }
 
-.notifpanel {
+.notif {
   position: fixed;
-  background-color: rgb(245, 229, 186);
+  left: 20px;
+  top: 100px;
   width: 15%;
   height: 50%;
+}
+
+.panel {
+  background-color: rgb(245, 229, 186);
   padding: 5px;
   border: 3px solid tan;
   border-radius: 5px;
   box-sizing: border-box;
-
-  left: 20px;
-  top: 100px;
 }
-
 
 button.smallbutton {
   border: black solid 1px;
