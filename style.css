@@ -5,8 +5,8 @@
 .center {
   text-align: center;
   vertical-align: middle;
-  display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 div.centerdiv {
@@ -21,6 +21,10 @@ table {
 td.square {
   width: clamp(30px, 5vw, 200px);
   height: clamp(30px, 5vw, 200px);
+}
+
+td.centertablecell {
+  margin: auto;
 }
 
 .basicborder {
@@ -38,4 +42,62 @@ aside.notifpanel {
   width: 15%;
   height: 50%;
   left: 30px;
+}
+
+/* cube things */
+.scene {
+  width: 200px;
+  height: 200px;
+  perspective: 600px;
+  border: 1px;
+  margin: auto;
+}
+
+.cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.cface {
+  position: absolute;
+  width: 200px;
+  height: auto;
+  aspect-ratio: 1/1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.cf-front {
+  background-color: red;
+  opacity: 50%;
+  transform: rotateY(0deg) translateZ(100px);
+}
+.cf-right {
+  background-color: yellow;
+  opacity: 50%;
+  transform: rotateY(90deg) translateZ(100px);
+}
+.cf-back {
+  background-color: blue;
+  opacity: 50%;
+  transform: rotateY(180deg) translateZ(100px);
+}
+.cf-left {
+  background-color: green;
+  opacity: 50%;
+  transform: rotateY(-90deg) translateZ(100px);
+}
+.cf-top {
+  background-color: purple;
+  opacity: 50%;
+  transform: rotateX(90deg) translateZ(100px);
+}
+.cf-bottom {
+  background-color: orange;
+  opacity: 50%;
+  transform: rotateX(-90deg) translateZ(100px);
 }
