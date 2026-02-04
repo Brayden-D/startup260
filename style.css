@@ -38,11 +38,11 @@ td.centertablecell {
   margin: 0px;
 }
 
-header.header {
+.header {
   background-color: tan; 
   width:100%; 
   height: 60px;
-  border-bottom: #956a35;
+  border-bottom: 10px solid #75681c;
 }
 
 button.bigbutton {
@@ -56,7 +56,7 @@ button.bigbutton {
 
 aside.notifpanel {
   position: fixed;
-  background-color: #fffecc;
+  background-color: rgb(245, 229, 186);
   width: 15%;
   height: 50%;
 
