@@ -45,6 +45,16 @@ td.centertablecell {
   border-bottom: 10px solid #75681c;
 }
 
+.footer {
+  position: fixed; 
+  bottom: 0; 
+  left: 0; 
+  width: 100%;
+  background-color: tan;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 button.smallbutton {
   border: black solid 1px;
   border-radius: 10px;
