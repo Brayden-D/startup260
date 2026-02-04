@@ -32,8 +32,14 @@ td.centertablecell {
   margin: auto;
 }
 
-.basicborder {
-  border: 1px solid black;
+.background {
+  background-image: url("../images/felt.png");
+  background-size: cover;
+  margin: 0px;
+}
+
+header.header {
+  background-color: tan; width:100%; height: 60px;
 }
 
 button.bigbutton {
@@ -115,3 +121,8 @@ aside.notifpanel {
 .cube.show-top    { transform: translateZ(-100px) rotateX( -90deg); }
 .cube.show-bottom { transform: translateZ(-100px) rotateX(  90deg); }
 .cube { transition: transform 1s; }
+
+/* debugging */
+.basicborder {
+  border: 1px solid black;
+}
