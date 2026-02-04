@@ -79,32 +79,26 @@ aside.notifpanel {
 
 .cf-front {
   background-color: red;
-  opacity: 50%;
   transform: rotateY(0deg) translateZ(100px);
 }
 .cf-right {
   background-color: yellow;
-  opacity: 50%;
   transform: rotateY(90deg) translateZ(100px);
 }
 .cf-back {
   background-color: blue;
-  opacity: 50%;
   transform: rotateY(180deg) translateZ(100px);
 }
 .cf-left {
   background-color: green;
-  opacity: 50%;
   transform: rotateY(-90deg) translateZ(100px);
 }
 .cf-top {
   background-color: purple;
-  opacity: 50%;
   transform: rotateX(90deg) translateZ(100px);
 }
 .cf-bottom {
   background-color: orange;
-  opacity: 50%;
   transform: rotateX(-90deg) translateZ(100px);
 }
 

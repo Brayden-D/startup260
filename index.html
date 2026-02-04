@@ -90,12 +90,24 @@
                 <td>
                     <div class="scene">
                         <div class="cube center">
-                            <div class="cface cf-front">front</div>
-                            <div class="cface cf-back">back</div>
-                            <div class="cface cf-right">right</div>
-                            <div class="cface cf-left">left</div>
-                            <div class="cface cf-top">top</div>
-                            <div class="cface cf-bottom">bottom</div>
+                            <div class="cface cf-front">
+                                <img src = "../images/dice_faces/2.png" class = "fill">
+                            </div>
+                            <div class="cface cf-back">
+                                <img src = "../images/dice_faces/5.png" class = "fill">
+                            </div>
+                            <div class="cface cf-right">
+                                <img src = "../images/dice_faces/4.png" class = "fill">
+                            </div>
+                            <div class="cface cf-left">
+                                <img src = "../images/dice_faces/3.png" class = "fill">
+                            </div>
+                            <div class="cface cf-top">
+                                <img src = "../images/dice_faces/1.png" class = "fill">
+                            </div>
+                            <div class="cface cf-bottom">
+                                <img src = "../images/dice_faces/6.png" class = "fill">
+                            </div>
                         </div>
                     </div>    
                 </td>
@@ -135,7 +147,7 @@
         setInterval(() => {
             cube.className = 'cube ' + faces[i % faces.length];
             i++;
-        }, 1500);
+        }, 2000);
     </script>
 
 
