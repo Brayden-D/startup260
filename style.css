@@ -39,7 +39,10 @@ td.centertablecell {
 }
 
 header.header {
-  background-color: tan; width:100%; height: 60px;
+  background-color: tan; 
+  width:100%; 
+  height: 60px;
+  border-bottom: #956a35;
 }
 
 button.bigbutton {
@@ -114,13 +117,22 @@ aside.notifpanel {
   transform: rotateX(-90deg) translateZ(100px);
 }
 
-.cube.show-front  { transform: translateZ(-100px) rotateY(   0deg); }
-.cube.show-right  { transform: translateZ(-100px) rotateY( -90deg); }
-.cube.show-back   { transform: translateZ(-100px) rotateY(-180deg); }
-.cube.show-left   { transform: translateZ(-100px) rotateY(  90deg); }
-.cube.show-top    { transform: translateZ(-100px) rotateX( -90deg); }
-.cube.show-bottom { transform: translateZ(-100px) rotateX(  90deg); }
-.cube { transition: transform 1s; }
+@keyframes spin {
+  from {
+    transform: translateZ(-100px) rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    transform: translateZ(-100px) rotateX(360deg) rotateY(360deg);
+  }
+}
+
+.cube {
+  animation: spin 18s linear infinite;
+}
+
+.scene:hover .cube {
+  animation-duration: 2.5s;
+}
 
 /* debugging */
 .basicborder {
