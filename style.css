@@ -244,7 +244,7 @@ div.notification {
 
 /* cube things */
 :root {
-  --cube-size: clamp(25px, 18vmin, 200px);
+  --cube-size: clamp(25px, 15vmin, 200px);
   --half-cube: calc(var(--cube-size) / 2);
 }
 
