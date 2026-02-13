@@ -1,9 +1,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
+import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { Home } from './home/home';
+import { Leaderboard } from './leaderboard/leaderboard';
+import { About } from './about/about';
 
 export default function App() {
   return (
+    <BrowserRouter>
     <div className="background">
       <header className="header">
         <table style={{ width: "100%" }}>
@@ -45,6 +50,13 @@ export default function App() {
         </table>
       </header>
 
+      <Routes>
+        <Route path='/' element={<Home />} exact />
+        <Route path='/leaderboard' element={<Leaderboard />} />
+        <Route path='/about' element={<About />} />
+        <Route path='*' element={<NotFound />} />
+      </Routes>
+
       <footer className="footer">
         <table style={{ width: "100%" }}>
           <tr>
@@ -63,22 +75,27 @@ export default function App() {
               </span>
             </td>
             <td style={{ textAlign: "right", width: "50%" }}>
-              <a href="index.html">
+              <NavLink to="">
                 <span className="linkbutton">Home</span>
-              </a>
+              </NavLink>
               &nbsp;
-              <a href="leaderboard.html">
+              <NavLink to="leaderboard">
                 <span className="linkbutton">Leaderboard</span>
-              </a>
+              </NavLink>
               &nbsp;
-              <a href="about.html">
+              <NavLink to="about">
                 <span className="linkbutton">About</span>
-              </a>
+              </NavLink>
               &nbsp;&nbsp;&nbsp;
             </td>
           </tr>
         </table>
       </footer>
     </div>
+    </BrowserRouter>
   );
+}
+
+function NotFound() {
+  return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
 }
