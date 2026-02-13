@@ -9,7 +9,8 @@ import { About } from './about/about';
 export default function App() {
   return (
     <BrowserRouter>
-    <div className="background">
+    <div className="background"
+    style={{ backgroundImage: "url('/felt.png')" }}>
       <header className="header">
         <table style={{ width: "100%" }}>
           <tr>

@@ -35,10 +35,11 @@ td.centertablecell {
 }
 
 .background {
-  background-image: url("/felt.png");
+  background-image: url("public/felt.png");
   background-size: cover;
   margin: 0px;
   height: 100vh;
+  background-color: gray;
 }
 
 .header {
