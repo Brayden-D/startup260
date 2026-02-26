@@ -1,7 +1,10 @@
-import React from "react";
-
+import React, { useState } from "react";
+import './home.css';
 
 export function Home() {
+
+  const [showEdit, setShowEdit] = useState(false);
+
   return (
     <div>
       <aside className="notifbox panel">
@@ -31,7 +34,7 @@ export function Home() {
         <br />
 
         <div className="center">
-          <button className="bigbutton">
+          <button className="bigbutton" onClick={() => setShowEdit(true)}>
             <b>Edit Die</b>
           </button>
 
@@ -178,6 +181,20 @@ export function Home() {
           </table>
         </div>
       </main>
+
+      {/* edit dice button popup */}
+      {showEdit && (
+        <div className="popup" onClick={() => setShowEdit(false)}>
+          <div
+            className="popup-content panel"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2>Edit Your Die</h2>
+            <button onClick={() => setShowEdit(false)}>Close</button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
