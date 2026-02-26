@@ -44,7 +44,7 @@ td.centertablecell {
 
 .header {
   background-color: tan; 
-  width:100%; 
+  width:100vw; 
   min-height: 60px;
   border-bottom: 10px solid #75681c;
 }

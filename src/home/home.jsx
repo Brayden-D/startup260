@@ -217,7 +217,19 @@ function EditDieModal({ onClose, faces, setFaces }) {
         onClick={(e) => e.stopPropagation()}
       >
         <h2>Edit Your Die</h2>
-        
+
+        {draft.map((f, i) => (
+          <div key={i}>
+            Face {i + 1}:{" "}
+            <input
+              type="number"
+              value={f}
+              onChange={(e) => updateFace(i, e.target.value)}
+            />
+          </div>
+        ))}
+
+        <br />
         Total: <b style = {{ color: total === 21 ? "green" : "red" }}>{total}</b>/21
         <br />
         <button disabled={total !== 21} onClick={handleSave}>
