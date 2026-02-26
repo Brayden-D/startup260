@@ -182,19 +182,22 @@ export function Home() {
         </div>
       </main>
 
-      {/* edit dice button popup */}
-      {showEdit && (
-        <div className="popup" onClick={() => setShowEdit(false)}>
-          <div
-            className="popup-content panel"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2>Edit Your Die</h2>
-            <button onClick={() => setShowEdit(false)}>Close</button>
-          </div>
-        </div>
-      )}
+      {showEdit && <EditDieModal onClose={() => setShowEdit(false)} />}
 
+    </div>
+  );
+}
+
+function EditDieModal({ onClose }) {
+  return (
+    <div className="popup" onClick={onClose}>
+      <div
+        className="popup-content panel"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2>Edit Your Die</h2>
+        <button onClick={onClose}>Close</button>
+      </div>
     </div>
   );
 }
