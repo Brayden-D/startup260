@@ -4,6 +4,7 @@ import './home.css';
 export function Home() {
 
   const [showEdit, setShowEdit] = useState(false);
+  const [faces, setFaces] = useState([1, 2, 3, 4, 5, 6]);
 
   return (
     <div>
@@ -182,13 +183,33 @@ export function Home() {
         </div>
       </main>
 
-      {showEdit && <EditDieModal onClose={() => setShowEdit(false)} />}
+      {showEdit && <EditDieModal 
+        onClose={() => setShowEdit(false)} 
+        faces = {faces}
+        setFaces = {setFaces}
+      />}
 
     </div>
   );
 }
 
-function EditDieModal({ onClose }) {
+function EditDieModal({ onClose, faces, setFaces }) {
+  const [draft, setDraft] = useState([...faces]);
+  const total = draft.reduce((a, b) => a + b, 0);
+
+  function updateFace(index, value) {
+    const newDraft = [...draft];
+    newDraft[index] = Number(value) || 0;
+    setDraft(newDraft);
+  }
+
+  function handleSave() {
+    if (total === 21) {
+      setFaces(draft);
+      onClose();
+    }
+  }
+
   return (
     <div className="popup" onClick={onClose}>
       <div
@@ -196,7 +217,12 @@ function EditDieModal({ onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         <h2>Edit Your Die</h2>
-        <button onClick={onClose}>Close</button>
+        
+        Total: <b style = {{ color: total === 21 ? "green" : "red" }}>{total}</b>/21
+        <br />
+        <button disabled={total !== 21} onClick={handleSave}>
+          Save
+        </button>
       </div>
     </div>
   );
