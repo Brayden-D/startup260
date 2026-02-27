@@ -1,11 +1,24 @@
 import React, { useState } from "react";
 import './home.css';
+import { generatePath } from "react-router-dom";
 
 export function Home() {
 
   const [showEdit, setShowEdit] = useState(false);
   const [showChallenge, setShowChallenge] = useState(false);
   const [faces, setFaces] = useState([1, 2, 3, 4, 5, 6]);
+  const [challenger, setChallenger] = useState([0, 0, 0, 0, 0, 0]);
+
+  /* temp generator until database is implimented */
+  function generateChallenger() {
+    const arr = [0,0,0,0,0,0];
+
+    for (let i = 0; i < 21; i++) {
+      arr[Math.floor(Math.random() * 6)]++;
+    }
+
+    setChallenger(arr);
+  }
 
   return (
     <div>
@@ -44,7 +57,10 @@ export function Home() {
           &nbsp;&nbsp;&nbsp;
 
           <button className="bigbutton" 
-            onClick={() => setShowChallenge(true)}>
+            onClick={() => {
+              generateChallenger();
+              setShowChallenge(true);
+              }}>
             <b>Challenge</b>
           </button>
         </div>
@@ -194,9 +210,8 @@ export function Home() {
 
       {showChallenge && <ChallengePanel
         onClose={() => setShowChallenge(false)} 
-        faces = {faces}
+        challenger = {challenger}
       />}
-
 
 
     </div>
@@ -250,7 +265,7 @@ function EditDiePanel({ onClose, faces, setFaces }) {
   );
 }
 
-function ChallengePanel({ onClose, faces }) {
+function ChallengePanel({ onClose, challenger }) {
 
   return (
     <div className="popup" onClick={onClose}>
@@ -263,14 +278,14 @@ function ChallengePanel({ onClose, faces }) {
         <br />
         <br />
 
-        <div class = "centerdiv">
+        <div className = "centerdiv">
           <table className="center" style={{ margin: "auto" }}>
             <tbody>
               <tr>
                 <td></td>
                  <td style={{ backgroundColor: "purple" }}>
                   <img
-                    src={`/dice_faces/${faces[0]}.png`}
+                    src={`/dice_faces/${challenger[0]}.png`}
                     className="fill"
                     alt="1"
                   />
@@ -281,7 +296,7 @@ function ChallengePanel({ onClose, faces }) {
               <tr>
                 <td style={{ backgroundColor: "green" }}>
                   <img
-                    src={`/dice_faces/${faces[2]}.png`}
+                    src={`/dice_faces/${challenger[2]}.png`}
                     className="fill"
                     alt="3"
                   />
@@ -289,7 +304,7 @@ function ChallengePanel({ onClose, faces }) {
 
                 <td style={{ backgroundColor: "red" }}>
                   <img
-                    src={`/dice_faces/${faces[1]}.png`}
+                    src={`/dice_faces/${challenger[1]}.png`}
                     className="fill"
                     alt="2"
                   />
@@ -297,7 +312,7 @@ function ChallengePanel({ onClose, faces }) {
 
                 <td style={{ backgroundColor: "yellow" }}>
                   <img
-                    src={`/dice_faces/${faces[3]}.png`}
+                    src={`/dice_faces/${challenger[3]}.png`}
                     className="fill"
                     alt="4"
                   />
@@ -308,7 +323,7 @@ function ChallengePanel({ onClose, faces }) {
                 <td></td>
                 <td style={{ backgroundColor: "orange" }}>
                   <img
-                    src={`/dice_faces/${faces[5]}.png`}
+                    src={`/dice_faces/${challenger[5]}.png`}
                     className="fill"
                     alt="6"
                   />
@@ -320,7 +335,7 @@ function ChallengePanel({ onClose, faces }) {
                 <td></td>
                 <td style={{ backgroundColor: "blue" }}>
                   <img
-                    src={`/dice_faces/${faces[4]}.png`}
+                    src={`/dice_faces/${challenger[4]}.png`}
                     className="fill"
                     alt="5"
                   />
@@ -341,3 +356,4 @@ function ChallengePanel({ onClose, faces }) {
   );
 
 }
+
