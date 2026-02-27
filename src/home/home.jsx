@@ -4,6 +4,7 @@ import './home.css';
 export function Home() {
 
   const [showEdit, setShowEdit] = useState(false);
+  const [showChallenge, setShowChallenge] = useState(false);
   const [faces, setFaces] = useState([1, 2, 3, 4, 5, 6]);
 
   return (
@@ -35,13 +36,15 @@ export function Home() {
         <br />
 
         <div className="center">
-          <button className="bigbutton" onClick={() => setShowEdit(true)}>
+          <button className="bigbutton" 
+            onClick={() => setShowEdit(true)}>
             <b>Edit Die</b>
           </button>
 
           &nbsp;&nbsp;&nbsp;
 
-          <button className="bigbutton">
+          <button className="bigbutton" 
+            onClick={() => setShowChallenge(true)}>
             <b>Challenge</b>
           </button>
         </div>
@@ -189,6 +192,11 @@ export function Home() {
         setFaces = {setFaces}
       />}
 
+      {showChallenge && <ChallengePanel
+        onClose={() => setShowChallenge(false)} 
+        faces = {faces}
+      />}
+
 
 
     </div>
@@ -240,4 +248,25 @@ function EditDiePanel({ onClose, faces, setFaces }) {
       </div>
     </div>
   );
+}
+
+function ChallengePanel({ onClose, faces }) {
+
+  return (
+    <div className="popup" onClick={onClose}>
+      <div
+        className="popup-content panel"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2>Challenge</h2>
+
+
+
+        <button>
+          Challenge
+        </button>
+      </div>
+    </div>
+  );
+
 }
