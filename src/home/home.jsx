@@ -190,7 +190,7 @@ export function Home() {
                         <img
                           src={`/dice_faces/${faces[5]}.png`}
                           className="fill"
-                          alt="6"
+                          alt="face 6"
                         />
                       </div>
                     </div>
@@ -248,6 +248,8 @@ function EditDiePanel({ onClose, faces, setFaces }) {
             Face {i + 1}:{" "}
             <input
               type="number"
+              min = "0"
+              max = "21"
               value={f}
               onChange={(e) => updateFace(i, e.target.value)}
             />
