@@ -63,7 +63,7 @@ export function Home() {
                         <td></td>
                         <td style={{ backgroundColor: "purple" }}>
                           <img
-                            src="/dice_faces/1.png"
+                            src={`/dice_faces/${faces[0]}.png`}
                             className="fill"
                             alt="1"
                           />
@@ -74,7 +74,7 @@ export function Home() {
                       <tr>
                         <td style={{ backgroundColor: "green" }}>
                           <img
-                            src="/dice_faces/3.png"
+                            src={`/dice_faces/${faces[2]}.png`}
                             className="fill"
                             alt="3"
                           />
@@ -82,7 +82,7 @@ export function Home() {
 
                         <td style={{ backgroundColor: "red" }}>
                           <img
-                            src="/dice_faces/2.png"
+                            src={`/dice_faces/${faces[1]}.png`}
                             className="fill"
                             alt="2"
                           />
@@ -90,7 +90,7 @@ export function Home() {
 
                         <td style={{ backgroundColor: "yellow" }}>
                           <img
-                            src="/dice_faces/4.png"
+                            src={`/dice_faces/${faces[3]}.png`}
                             className="fill"
                             alt="4"
                           />
@@ -101,7 +101,7 @@ export function Home() {
                         <td></td>
                         <td style={{ backgroundColor: "orange" }}>
                           <img
-                            src="/dice_faces/6.png"
+                            src={`/dice_faces/${faces[5]}.png`}
                             className="fill"
                             alt="6"
                           />
@@ -113,7 +113,7 @@ export function Home() {
                         <td></td>
                         <td style={{ backgroundColor: "blue" }}>
                           <img
-                            src="/dice_faces/5.png"
+                            src={`/dice_faces/${faces[4]}.png`}
                             className="fill"
                             alt="5"
                           />
@@ -129,47 +129,47 @@ export function Home() {
                     <div className="cube center">
                       <div className="cface cf-front">
                         <img
-                          src="/dice_faces/2.png"
+                          src={`/dice_faces/${faces[1]}.png`}
                           className="fill"
-                          alt="2"
+                          alt="face 2"
                         />
                       </div>
 
                       <div className="cface cf-back">
                         <img
-                          src="/dice_faces/5.png"
+                          src={`/dice_faces/${faces[4]}.png`}
                           className="fill"
-                          alt="5"
+                          alt="face 5"
                         />
                       </div>
 
                       <div className="cface cf-right">
                         <img
-                          src="/dice_faces/4.png"
+                          src={`/dice_faces/${faces[3]}.png`}
                           className="fill"
-                          alt="4"
+                          alt="face 4"
                         />
                       </div>
 
                       <div className="cface cf-left">
                         <img
-                          src="/dice_faces/3.png"
+                          src={`/dice_faces/${faces[2]}.png`}
                           className="fill"
-                          alt="3"
+                          alt="face 3"
                         />
                       </div>
 
                       <div className="cface cf-top">
                         <img
-                          src="/dice_faces/1.png"
+                          src={`/dice_faces/${faces[0]}.png`}
                           className="fill"
-                          alt="1"
+                          alt="face 1"
                         />
                       </div>
 
                       <div className="cface cf-bottom">
                         <img
-                          src="/dice_faces/6.png"
+                          src={`/dice_faces/${faces[5]}.png`}
                           className="fill"
                           alt="6"
                         />
@@ -183,17 +183,19 @@ export function Home() {
         </div>
       </main>
 
-      {showEdit && <EditDieModal 
+      {showEdit && <EditDiePanel
         onClose={() => setShowEdit(false)} 
         faces = {faces}
         setFaces = {setFaces}
       />}
 
+
+
     </div>
   );
 }
 
-function EditDieModal({ onClose, faces, setFaces }) {
+function EditDiePanel({ onClose, faces, setFaces }) {
   const [draft, setDraft] = useState([...faces]);
   const total = draft.reduce((a, b) => a + b, 0);
 
