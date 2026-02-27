@@ -259,8 +259,79 @@ function ChallengePanel({ onClose, faces }) {
         onClick={(e) => e.stopPropagation()}
       >
         <h2>Challenge</h2>
+        [user]'s die
+        <br />
+        <br />
 
+        <div class = "centerdiv">
+          <table className="center" style={{ margin: "auto" }}>
+            <tbody>
+              <tr>
+                <td></td>
+                 <td style={{ backgroundColor: "purple" }}>
+                  <img
+                    src={`/dice_faces/${faces[0]}.png`}
+                    className="fill"
+                    alt="1"
+                  />
+                </td>
+               <td></td>
+              </tr>
 
+              <tr>
+                <td style={{ backgroundColor: "green" }}>
+                  <img
+                    src={`/dice_faces/${faces[2]}.png`}
+                    className="fill"
+                    alt="3"
+                  />
+                </td>
+
+                <td style={{ backgroundColor: "red" }}>
+                  <img
+                    src={`/dice_faces/${faces[1]}.png`}
+                    className="fill"
+                    alt="2"
+                  />
+                </td>
+
+                <td style={{ backgroundColor: "yellow" }}>
+                  <img
+                    src={`/dice_faces/${faces[3]}.png`}
+                    className="fill"
+                    alt="4"
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td style={{ backgroundColor: "orange" }}>
+                  <img
+                    src={`/dice_faces/${faces[5]}.png`}
+                    className="fill"
+                    alt="6"
+                  />
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td style={{ backgroundColor: "blue" }}>
+                  <img
+                    src={`/dice_faces/${faces[4]}.png`}
+                    className="fill"
+                    alt="5"
+                  />
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <br />
 
         <button>
           Challenge
