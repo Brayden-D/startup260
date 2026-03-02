@@ -298,9 +298,10 @@ function ChallengePanel({ onClose, faces, challenger }) {
         onClick={(e) => e.stopPropagation()}
       >
         <h2>Challenge</h2>
-        [user]'s die
 
         {userRoll == null && (
+          <div>
+          [user]'s die
           <div className = "centerdiv">
             <br />
             <table className="center" style={{ margin: "auto" }}>
@@ -369,17 +370,18 @@ function ChallengePanel({ onClose, faces, challenger }) {
               </tbody>
             </table>
           </div>
+          </div>
         )}
 
         {userRoll !== null && (
           <div class = "centerdiv">
-            <div style={{ display: "flex", justifyContent: "center", gap: "40px" }}>
+            <div style={{ display: "flex", justifyContent: "center", gap: "30px" }}>
               
               <div class = "center">
                 <p><b>You <br /> Rolled</b></p>
                 <img
                   src={`/dice_faces/${userRoll}.png`}
-                  className="fill"
+                  style = {{ width: "100px" }}
                   alt="your roll"
                 />
               </div>
@@ -388,7 +390,7 @@ function ChallengePanel({ onClose, faces, challenger }) {
                 <p><b>[user] <br /> Rolled</b></p>
                 <img
                   src={`/dice_faces/${enemyRoll}.png`}
-                  className="fill"
+                  style = {{ width: "100px" }}
                   alt="enemy roll"
                 />
               </div>
@@ -419,9 +421,11 @@ function ChallengePanel({ onClose, faces, challenger }) {
           <button onClick={onClose}>
             Close
           </button>
-          <button onClick={handleChallenge}> 
-            Challenge
-          </button>
+          {userRoll == null && (
+            <button onClick={handleChallenge}> 
+              Challenge
+            </button>
+          )}
         </div>
       </div>
     </div>
