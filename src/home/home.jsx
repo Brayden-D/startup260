@@ -210,6 +210,7 @@ export function Home() {
 
       {showChallenge && <ChallengePanel
         onClose={() => setShowChallenge(false)} 
+        faces = {faces}
         challenger = {challenger}
       />}
 
@@ -272,7 +273,23 @@ function EditDiePanel({ onClose, faces, setFaces }) {
   );
 }
 
-function ChallengePanel({ onClose, challenger }) {
+function ChallengePanel({ onClose, faces, challenger }) {
+
+  const [userRoll, setUserRoll] = useState(null);
+  const [enemyRoll, setEnemyRoll] = useState(null);
+
+  function handleChallenge() {
+    const userResult = rollDie(faces);
+    const enemyResult = rollDie(challenger);
+
+    setUserRoll(userResult);
+    setEnemyRoll(enemyResult);
+  }
+
+  function rollDie(die) {
+    const index = Math.floor(Math.random() * 6);
+    return die[index];
+  }
 
   return (
     <div className="popup" onClick={onClose}>
@@ -282,83 +299,127 @@ function ChallengePanel({ onClose, challenger }) {
       >
         <h2>Challenge</h2>
         [user]'s die
-        <br />
-        <br />
 
-        <div className = "centerdiv">
-          <table className="center" style={{ margin: "auto" }}>
-            <tbody>
-              <tr>
+        {userRoll == null && (
+          <div className = "centerdiv">
+            <br />
+            <table className="center" style={{ margin: "auto" }}>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td style={{ backgroundColor: "purple" }}>
+                    <img
+                      src={`/dice_faces/${challenger[0]}.png`}
+                      className="fill"
+                      alt="1"
+                    />
+                  </td>
                 <td></td>
-                 <td style={{ backgroundColor: "purple" }}>
-                  <img
-                    src={`/dice_faces/${challenger[0]}.png`}
-                    className="fill"
-                    alt="1"
-                  />
-                </td>
-               <td></td>
-              </tr>
+                </tr>
 
-              <tr>
-                <td style={{ backgroundColor: "green" }}>
-                  <img
-                    src={`/dice_faces/${challenger[2]}.png`}
-                    className="fill"
-                    alt="3"
-                  />
-                </td>
+                <tr>
+                  <td style={{ backgroundColor: "green" }}>
+                    <img
+                      src={`/dice_faces/${challenger[2]}.png`}
+                      className="fill"
+                      alt="3"
+                    />
+                  </td>
 
-                <td style={{ backgroundColor: "red" }}>
-                  <img
-                    src={`/dice_faces/${challenger[1]}.png`}
-                    className="fill"
-                    alt="2"
-                  />
-                </td>
+                  <td style={{ backgroundColor: "red" }}>
+                    <img
+                      src={`/dice_faces/${challenger[1]}.png`}
+                      className="fill"
+                      alt="2"
+                    />
+                  </td>
 
-                <td style={{ backgroundColor: "yellow" }}>
-                  <img
-                    src={`/dice_faces/${challenger[3]}.png`}
-                    className="fill"
-                    alt="4"
-                  />
-                </td>
-              </tr>
+                  <td style={{ backgroundColor: "yellow" }}>
+                    <img
+                      src={`/dice_faces/${challenger[3]}.png`}
+                      className="fill"
+                      alt="4"
+                    />
+                  </td>
+                </tr>
 
-              <tr>
-                <td></td>
-                <td style={{ backgroundColor: "orange" }}>
-                  <img
-                    src={`/dice_faces/${challenger[5]}.png`}
-                    className="fill"
-                    alt="6"
-                  />
-                </td>
-                <td></td>
-              </tr>
+                <tr>
+                  <td></td>
+                  <td style={{ backgroundColor: "orange" }}>
+                    <img
+                      src={`/dice_faces/${challenger[5]}.png`}
+                      className="fill"
+                      alt="6"
+                    />
+                  </td>
+                  <td></td>
+                </tr>
 
-              <tr>
-                <td></td>
-                <td style={{ backgroundColor: "blue" }}>
-                  <img
-                    src={`/dice_faces/${challenger[4]}.png`}
-                    className="fill"
-                    alt="5"
-                  />
-                </td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                <tr>
+                  <td></td>
+                  <td style={{ backgroundColor: "blue" }}>
+                    <img
+                      src={`/dice_faces/${challenger[4]}.png`}
+                      className="fill"
+                      alt="5"
+                    />
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {userRoll !== null && (
+          <div class = "centerdiv">
+            <div style={{ display: "flex", justifyContent: "center", gap: "40px" }}>
+              
+              <div class = "center">
+                <p><b>You <br /> Rolled</b></p>
+                <img
+                  src={`/dice_faces/${userRoll}.png`}
+                  className="fill"
+                  alt="your roll"
+                />
+              </div>
+
+              <div class = "center">
+                <p><b>[user] <br /> Rolled</b></p>
+                <img
+                  src={`/dice_faces/${enemyRoll}.png`}
+                  className="fill"
+                  alt="enemy roll"
+                />
+              </div>
+
+            </div>
+
+            <h2 style={{
+              marginTop: "20px",
+              color:
+                userRoll > enemyRoll
+                  ? "green"
+                  : userRoll < enemyRoll
+                  ? "red"
+                  : "gray"
+            }}>
+              {userRoll > enemyRoll
+                ? "You Win!"
+                : userRoll < enemyRoll
+                ? "You Lose!"
+                : "Tie!"}
+            </h2>
+
+          </div>
+        )}
 
         <br />
         <div style={{ display: "flex", gap: "10px" }}>
           <button onClick={onClose}>
             Close
           </button>
-          <button> 
+          <button onClick={handleChallenge}> 
             Challenge
           </button>
         </div>
