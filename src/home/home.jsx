@@ -8,6 +8,7 @@ export function Home() {
   const [showChallenge, setShowChallenge] = useState(false);
   const [faces, setFaces] = useState([1, 2, 3, 4, 5, 6]);
   const [challenger, setChallenger] = useState([0, 0, 0, 0, 0, 0]);
+  const [streak, setStreak] = useState(0);
 
   /* temp generator until database is implimented */
   function generateChallenger() {
@@ -199,6 +200,19 @@ export function Home() {
               </tr>
             </tbody>
           </table>
+          <br />
+          <br />
+          <div style = {{ 
+            backgroundColor: "#7ab67b",
+            minWidth: "100px",
+            borderRadius: "10px",
+            border: "3px solid #75681c",
+            padding: "3px",
+            paddingLeft: "5px",
+            paddingRight: "5px"
+          }}>
+              <b>Current Streak: {streak}</b>
+          </div>
         </div>
       </main>
 
@@ -212,6 +226,8 @@ export function Home() {
         onClose={() => setShowChallenge(false)} 
         faces = {faces}
         challenger = {challenger}
+        streak = {streak}
+        setStreak = {setStreak}
       />}
 
 
@@ -273,7 +289,7 @@ function EditDiePanel({ onClose, faces, setFaces }) {
   );
 }
 
-function ChallengePanel({ onClose, faces, challenger }) {
+function ChallengePanel({ onClose, faces, challenger, streak, setStreak }) {
 
   const [userRoll, setUserRoll] = useState(null);
   const [enemyRoll, setEnemyRoll] = useState(null);
@@ -284,7 +300,13 @@ function ChallengePanel({ onClose, faces, challenger }) {
 
     setUserRoll(userResult);
     setEnemyRoll(enemyResult);
-  }
+
+    if (userResult > enemyResult) {
+      setStreak(streak + 1);
+    } else if (userResult < enemyResult) {
+      setStreak(0);
+    }
+}
 
   function rollDie(die) {
     const index = Math.floor(Math.random() * 6);
