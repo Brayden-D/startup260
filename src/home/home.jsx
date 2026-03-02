@@ -259,9 +259,14 @@ function EditDiePanel({ onClose, faces, setFaces }) {
         <br />
         Total: <b style = {{ color: total === 21 ? "green" : "red" }}>{total}</b>/21
         <br />
-        <button disabled={total !== 21} onClick={handleSave}>
-          Save
-        </button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button onClick={onClose}>
+            Close
+          </button>
+          <button disabled={total !== 21} onClick={handleSave}>
+            Save
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -349,10 +354,14 @@ function ChallengePanel({ onClose, challenger }) {
         </div>
 
         <br />
-
-        <button>
-          Challenge
-        </button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button onClick={onClose}>
+            Close
+          </button>
+          <button> 
+            Challenge
+          </button>
+        </div>
       </div>
     </div>
   );

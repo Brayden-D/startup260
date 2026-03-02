@@ -78,7 +78,8 @@ td.centertablecell {
 button.smallbutton {
   border: black solid 1px;
   border-radius: 10px;
-  width: 60px;
+  min-width: 60px;
+  width: fit-content;
 }
 
 button.bigbutton {
