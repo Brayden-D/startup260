@@ -9,6 +9,11 @@ export function Home({ maxStreak, setMaxStreak }) {
   const [faces, setFaces] = useState([1, 2, 3, 4, 5, 6]);
   const [challenger, setChallenger] = useState([0, 0, 0, 0, 0, 0]);
   const [streak, setStreak] = useState(0);
+  const [notifications, setNotifications] = useState([
+    { id: 1, text: "Placeholder notif 1" },
+    { id: 2, text: "Placeholder notif 2" },
+    { id: 3, text: "wow look at this websocket" }
+  ]);
 
   /* temp generator until database is implimented */
   function generateChallenger() {
@@ -20,6 +25,19 @@ export function Home({ maxStreak, setMaxStreak }) {
 
     setChallenger(arr);
   }
+
+  const addNotification = (text) => {
+    setNotifications((prev) => [
+      ...prev,
+      { id: Date.now(), text }
+    ]);
+  };
+
+  const removeNotification = (id) => {
+    setNotifications((prev) =>
+      prev.filter((notif) => notif.id !== id)
+    );
+  };
 
   return (
     <div>
@@ -34,16 +52,20 @@ export function Home({ maxStreak, setMaxStreak }) {
           }}
         >
           <b>Notifications</b>
+          <div style={{ height: "10px" }} />
         </div>
 
-        <div style={{ height: "10px" }}></div>
-        <div className="notification">Placeholder notif 1</div>
-
-        <div style={{ height: "10px" }}></div>
-        <div className="notification">Placeholder notif 2</div>
-
-        <div style={{ height: "10px" }}></div>
-        <div className="notification">wow look at this websocket</div>
+        {notifications.map((notif) => (
+          <div key={notif.id}>
+            <div className="notification">
+              {notif.text}
+              <button onClick={() => removeNotification(notif.id)}>
+                ✕
+              </button>
+            </div>
+            <div style={{ height: "10px" }} />
+          </div>
+        ))}
       </aside>
 
       <main>
