@@ -9,6 +9,7 @@ export function Home() {
   const [faces, setFaces] = useState([1, 2, 3, 4, 5, 6]);
   const [challenger, setChallenger] = useState([0, 0, 0, 0, 0, 0]);
   const [streak, setStreak] = useState(0);
+  const [maxStreak, setMaxStreak] = useState(0);
 
   /* temp generator until database is implimented */
   function generateChallenger() {
@@ -203,7 +204,7 @@ export function Home() {
           <br />
           <br />
           <div style = {{ 
-            backgroundColor: "#7ab67b",
+            backgroundColor: "rgb(245, 229, 186)",
             minWidth: "100px",
             borderRadius: "10px",
             border: "3px solid #75681c",
@@ -212,6 +213,8 @@ export function Home() {
             paddingRight: "5px"
           }}>
               <b>Current Streak: {streak}</b>
+              <br />
+              <b>Best Streak: {maxStreak}</b>
           </div>
         </div>
       </main>
@@ -228,6 +231,8 @@ export function Home() {
         challenger = {challenger}
         streak = {streak}
         setStreak = {setStreak}
+        maxStreak = {maxStreak}
+        setMaxStreak = {setMaxStreak}
       />}
 
 
@@ -289,7 +294,9 @@ function EditDiePanel({ onClose, faces, setFaces }) {
   );
 }
 
-function ChallengePanel({ onClose, faces, challenger, streak, setStreak }) {
+function ChallengePanel({ onClose, faces, challenger, 
+  streak, setStreak, 
+  maxStreak, setMaxStreak}) {
 
   const [userRoll, setUserRoll] = useState(null);
   const [enemyRoll, setEnemyRoll] = useState(null);
@@ -302,11 +309,18 @@ function ChallengePanel({ onClose, faces, challenger, streak, setStreak }) {
     setEnemyRoll(enemyResult);
 
     if (userResult > enemyResult) {
-      setStreak(streak + 1);
-    } else if (userResult < enemyResult) {
+      setStreak(prev => {
+        const newStreak = prev + 1;
+
+        setMaxStreak(max => Math.max(max, newStreak));
+
+        return newStreak;
+      });
+    } 
+    else if (userResult < enemyResult) {
       setStreak(0);
     }
-}
+  }
 
   function rollDie(die) {
     const index = Math.floor(Math.random() * 6);
