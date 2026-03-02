@@ -1,6 +1,16 @@
 import React from "react";
 
 export function Leaderboard() {
+
+  let entries = [
+    { id: 2, name: "Alice", streak: 6 },
+    { id: 3, name: "Bob", streak: 3 }
+  ];
+
+  const sortedEntries = [...entries].sort(
+    (a, b) => b.streak - a.streak
+  );
+
   return (
     <main>
       <br />
@@ -16,8 +26,11 @@ export function Leaderboard() {
           </div>
 
           <div style={{ textAlign: "left", width: "85%", height: "50vh" }}>
-            1. User: X in a row <br />
-            2. User: Y in a row
+            {sortedEntries.map((entry, index) => (
+              <div key={entry.id}>
+                {index + 1}. {entry.name}: <b>{entry.streak}</b> in a row
+              </div>
+            ))}
           </div>
 
           <br />
