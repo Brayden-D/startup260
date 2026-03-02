@@ -11,6 +11,8 @@ export default function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [maxStreak, setMaxStreak] = useState(0);
+  
 
   function handleLogin() {
     if (loggedInUser) {
@@ -38,35 +40,44 @@ export default function App() {
               </h1>
             </td>
             <td style={{ textAlign: "right", paddingRight: "10px" }}>
-              <span className="nowrap">
-                Username:
-                <input type="text" 
-                  placeholder="username" 
-                  value = {username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </span>
+              {!loggedInUser && (
+                <span>
+                <span className="nowrap"
+                  style = {{ marginRight: "10px"}}>
+                  Username: 
+                  <input type="text" 
+                    placeholder="username" 
+                    value = {username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    style = {{ marginLeft: "5px"}}
+                  />
+                </span>
 
-              &nbsp;&nbsp;
-
-              <span className="nowrap">
-                Password:
-                <input type="text" 
-                  placeholder="username" 
-                  value = {password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </span>
+                <span className="nowrap"
+                  style = {{ marginRight: "10px"}}>
+                  Password:
+                  <input type="text" 
+                    placeholder="username" 
+                    value = {password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    style = {{ marginLeft: "5px"}}
+                  />
+                </span>
+                </span> 
+              )}
 
               <span className="nowrap">
                 <button type="submit" 
                 onClick={handleLogin}>
                   {loggedInUser ? "Logout" : "Login"}
                 </button>
-                <button type="submit" 
-                onClick={handleLogin}>
-                  Create
-                </button>
+                {!loggedInUser && (
+                  <button type="submit" 
+                    onClick={handleLogin}
+                    style = {{ marginLeft: "5px"}}>
+                    Create
+                  </button>
+                )}
               </span>
 
               <div style={{ height: "5px" }}></div>
@@ -79,8 +90,10 @@ export default function App() {
       </header>
 
       <Routes>
-        <Route path='/' element={<Home />} exact />
-        <Route path='/leaderboard' element={<Leaderboard />} />
+        <Route path='/' element={<Home 
+            maxStreak={maxStreak} setMaxStreak={setMaxStreak} />} exact />
+        <Route path='/leaderboard' element={<Leaderboard 
+            loggedInUser = {loggedInUser} maxStreak={maxStreak} />} />
         <Route path='/about' element={<About />} />
         <Route path='*' element={<NotFound />} />
       </Routes>

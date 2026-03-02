@@ -1,10 +1,11 @@
 import React from "react";
 
-export function Leaderboard() {
+export function Leaderboard({ loggedInUser, maxStreak }) {
 
   let entries = [
-    { id: 2, name: "Alice", streak: 6 },
-    { id: 3, name: "Bob", streak: 3 }
+    { id: 0, name: (loggedInUser? loggedInUser : "[You]"), streak: maxStreak},
+    { id: 1, name: "Alice", streak: 6 },
+    { id: 2, name: "Bob", streak: 3 }
   ];
 
   const sortedEntries = [...entries].sort(

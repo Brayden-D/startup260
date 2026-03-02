@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import './home.css';
 import { generatePath } from "react-router-dom";
 
-export function Home() {
+export function Home({ maxStreak, setMaxStreak }) {
 
   const [showEdit, setShowEdit] = useState(false);
   const [showChallenge, setShowChallenge] = useState(false);
   const [faces, setFaces] = useState([1, 2, 3, 4, 5, 6]);
   const [challenger, setChallenger] = useState([0, 0, 0, 0, 0, 0]);
   const [streak, setStreak] = useState(0);
-  const [maxStreak, setMaxStreak] = useState(0);
 
   /* temp generator until database is implimented */
   function generateChallenger() {
@@ -207,7 +206,7 @@ export function Home() {
             backgroundColor: "rgb(245, 229, 186)",
             minWidth: "100px",
             borderRadius: "10px",
-            border: "3px solid #75681c",
+            border: "3px solid tan",
             padding: "3px",
             paddingLeft: "5px",
             paddingRight: "5px"
