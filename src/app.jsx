@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
@@ -7,6 +7,22 @@ import { Leaderboard } from './leaderboard/leaderboard';
 import { About } from './about/about';
 
 export default function App() {
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  function handleLogin() {
+    if (loggedInUser) {
+      setLoggedInUser(null);
+      return;
+    }
+    if (username && password) {
+      setLoggedInUser(username);
+      setPassword("");
+    }
+  }
+
   return (
     <BrowserRouter>
     <div className="background" style={{ backgroundImage: "url('/felt.png')" }}>
@@ -24,27 +40,39 @@ export default function App() {
             <td style={{ textAlign: "right", paddingRight: "10px" }}>
               <span className="nowrap">
                 Username:
-                <input type="text" placeholder="username" />
+                <input type="text" 
+                  placeholder="username" 
+                  value = {username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
               </span>
 
               &nbsp;&nbsp;
 
               <span className="nowrap">
                 Password:
-                <input type="password" placeholder="password" />
+                <input type="text" 
+                  placeholder="username" 
+                  value = {password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </span>
 
               <span className="nowrap">
-                <button type="submit" className="smallbutton">
-                  Login
+                <button type="submit" 
+                onClick={handleLogin}>
+                  {loggedInUser ? "Logout" : "Login"}
                 </button>
-                <button type="submit" className="smallbutton">
+                <button type="submit" 
+                onClick={handleLogin}>
                   Create
                 </button>
               </span>
 
               <div style={{ height: "5px" }}></div>
-              Logged in as [placeholder]
+              {loggedInUser
+                ? `Logged in as ${loggedInUser}`
+                : "Not logged in"}
             </td>
           </tr>
         </table>
