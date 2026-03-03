@@ -99,7 +99,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [X] **All functionality implemented or mocked out** - indeed it now is
-- [X] **Hooks** - Joke button on about page
+- [X] **Hooks** - Joke button on about page, various variable representations
 
 ## 🚀 Service deliverable
 
