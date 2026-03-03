@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './home.css';
 import { generatePath } from "react-router-dom";
 
@@ -39,6 +39,23 @@ export function Home({ maxStreak, setMaxStreak }) {
     );
   };
 
+  useEffect(() => {
+    const messages = [
+      "Your die was beaten by Bob!",
+      "Alice is on a streak!",
+      "Your die tied with Alice!",
+    ];
+
+    const interval = setInterval(() => {
+      const randomMessage =
+        messages[Math.floor(Math.random() * messages.length)];
+
+      addNotification(randomMessage);
+    }, 45000 + Math.random() * 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div>
       <aside className="notifbox panel">
@@ -52,18 +69,19 @@ export function Home({ maxStreak, setMaxStreak }) {
           }}
         >
           <b>Notifications</b>
-          <div style={{ height: "10px" }} />
         </div>
 
         {notifications.map((notif) => (
           <div key={notif.id}>
             <div className="notification">
               {notif.text}
-              <button onClick={() => removeNotification(notif.id)}>
-                ✕
+              <br />
+              <button 
+                className = "remove-btn"
+                onClick={() => removeNotification(notif.id)}>
+                ✖
               </button>
             </div>
-            <div style={{ height: "10px" }} />
           </div>
         ))}
       </aside>

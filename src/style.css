@@ -106,17 +106,6 @@ span.linkbutton:hover {
   background-color: rgb(177, 153, 122);
 }
 
-div.notification {
-  background-color: tan;
-  font-family: Roboto;
-  min-height: 25px;
-  width: 100%;
-  line-height: 25px;
-  padding: 5px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-}
-
 /* debugging */
 .basicborder {
   border: 1px solid black;
