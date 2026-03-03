@@ -65,6 +65,8 @@ td.centertablecell {
   top: 100px;
   width: 15%;
   height: 50%;
+  overflow-y: auto;
+  overflow-x: hidden; 
 }
 
 .panel {

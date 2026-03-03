@@ -1,6 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 
 export function About() {
+
+  const [joke, setJoke] = useState("");
+
+  async function fetchJoke() {
+    try {
+      const response = await fetch("https://official-joke-api.appspot.com/random_joke");
+      const data = await response.json();
+      setJoke(data);
+
+    } catch (err) {
+      console.error("API error:", err);
+    }
+  }
+
+
   return (
     <main>
       <br />
@@ -59,6 +74,28 @@ export function About() {
           </div>
         </div>
       </div>
+      <br />
+      <div className="centerdiv">
+        <div
+          className="centerdiv panel"
+          style={{ width: "50%" }}
+        >
+          <div style={{
+              textAlign: "left",
+              width: "85%",
+            }}>
+            {joke && (
+              <div className = "centerdiv">
+                <p>{joke.setup}</p>
+                <p>{joke.punchline}</p>
+              </div>
+            )}
+          </div>
+          <button onClick={fetchJoke}>
+            Get Joke
+          </button>
+        </div>
+      </div>  
     </main>
   );
 }

@@ -507,4 +507,3 @@ function ChallengePanel({ onClose, faces, challenger,
   );
 
 }
-
