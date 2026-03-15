@@ -5,15 +5,18 @@ const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
+const authCookieName = 'token';
 
 let apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 app.use(express.json());
+app.use(cookieParser());
 
 let users = [];
 let dice = []
 let scores = [];
 
+// USERS
 // CreateAuth a new user
 apiRouter.post('/auth/create', async (req, res) => {
   if (await findUser('username', req.body.username)) {
@@ -60,6 +63,42 @@ const verifyAuth = async (req, res, next) => {
   }
 };
 
+// DICE
+// GetSRandomDice
+apiRouter.get('/dice', verifyAuth, (_req, res) => {
+  res.send(scores);
+});
+
+// GetUserDie
+apiRouter.get('/die', verifyAuth, (_req, res) => {
+  res.send(score);
+});
+
+// UpdateUserDie
+apiRouter.post('/die', verifyAuth, (req, res) => {
+  scores = updateUserDie(req.body);
+  res.send(scores);
+});
+
+// SCORES
+// GetScores
+apiRouter.get('/scores', verifyAuth, (_req, res) => {
+  res.send(scores);
+});
+
+// GetUserScore
+apiRouter.get('/score', verifyAuth, (_req, res) => {
+  res.send(score);
+});
+
+// SubmitScore
+apiRouter.post('/score', verifyAuth, (req, res) => {
+  scores = updateScores(req.body);
+  res.send(scores);
+});
+
+
+
 
 // Default error handler
 app.use(function (err, req, res, next) {
@@ -77,4 +116,6 @@ app.listen(port, () => {
 
 async function createUser() {}
 async function findUser() {}
+function updateUserDie() {}
+function updateScores() {}
 function setAuthCookie() {}
