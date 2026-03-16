@@ -15,6 +15,28 @@ export function Home({ maxStreak, setMaxStreak }) {
     { id: 3, text: "wow look at this websocket" }
   ]);
 
+  useEffect(() => {
+    async function loadScore() {
+      try {
+        const res = await fetch("/api/score", {
+          method: "GET",
+          credentials: "include"
+        });
+
+        if (!res.ok) return;
+
+        const score = await res.json();
+
+        setStreak(score);
+        setMaxStreak(score);
+      } catch (err) {
+        console.error("Failed to load score", err);
+      }
+    }
+
+    loadScore();
+  }, []);
+
   const addNotification = (text) => {
     setNotifications((prev) => [
       ...prev,
@@ -349,7 +371,8 @@ function ChallengePanel({ onClose, faces,
 
   const [userRoll, setUserRoll] = useState(null);
   const [enemyRoll, setEnemyRoll] = useState(null);
-  const [challenger, setChallenger] = useState([0,0,0,0,0,0]);
+  const [challenger, setChallenger] = useState({username: "opponent", die: [1,2,3,4,5,6]});
+
 
   useEffect(() => {
     async function fetchChallenger() {
@@ -359,10 +382,9 @@ function ChallengePanel({ onClose, faces,
           credentials: "include"
         });
 
-        //if (!res.ok) return;
-
-        const die = await res.json();
-        setChallenger(die);
+        const data = await res.json();
+        console.log(data);
+        setChallenger(data);
       } catch (err) {
         console.error(err);
       }
@@ -373,7 +395,7 @@ function ChallengePanel({ onClose, faces,
 
   async function handleChallenge() {
     const userResult = rollDie(faces);
-    const enemyResult = rollDie(challenger);
+    const enemyResult = rollDie(challenger.die);
 
     setUserRoll(userResult);
     setEnemyRoll(enemyResult);
@@ -415,9 +437,9 @@ function ChallengePanel({ onClose, faces,
       >
         <h2>Challenge</h2>
 
-        {userRoll == null && (
+        {userRoll == null && challenger.die && (
           <div>
-          [user]'s die
+          {challenger.username}'s die
           <div className = "centerdiv">
             <br />
             <table className="center" style={{ margin: "auto" }}>
@@ -426,7 +448,7 @@ function ChallengePanel({ onClose, faces,
                   <td></td>
                   <td style={{ backgroundColor: "purple" }}>
                     <img
-                      src={`/dice_faces/${challenger[0]}.png`}
+                      src={`/dice_faces/${challenger.die[0]}.png`}
                       className="fill"
                       alt="1"
                     />
@@ -437,7 +459,7 @@ function ChallengePanel({ onClose, faces,
                 <tr>
                   <td style={{ backgroundColor: "green" }}>
                     <img
-                      src={`/dice_faces/${challenger[2]}.png`}
+                      src={`/dice_faces/${challenger.die[2]}.png`}
                       className="fill"
                       alt="3"
                     />
@@ -445,7 +467,7 @@ function ChallengePanel({ onClose, faces,
 
                   <td style={{ backgroundColor: "red" }}>
                     <img
-                      src={`/dice_faces/${challenger[1]}.png`}
+                      src={`/dice_faces/${challenger.die[1]}.png`}
                       className="fill"
                       alt="2"
                     />
@@ -453,7 +475,7 @@ function ChallengePanel({ onClose, faces,
 
                   <td style={{ backgroundColor: "yellow" }}>
                     <img
-                      src={`/dice_faces/${challenger[3]}.png`}
+                      src={`/dice_faces/${challenger.die[3]}.png`}
                       className="fill"
                       alt="4"
                     />
@@ -464,7 +486,7 @@ function ChallengePanel({ onClose, faces,
                   <td></td>
                   <td style={{ backgroundColor: "orange" }}>
                     <img
-                      src={`/dice_faces/${challenger[5]}.png`}
+                      src={`/dice_faces/${challenger.die[5]}.png`}
                       className="fill"
                       alt="6"
                     />
@@ -476,7 +498,7 @@ function ChallengePanel({ onClose, faces,
                   <td></td>
                   <td style={{ backgroundColor: "blue" }}>
                     <img
-                      src={`/dice_faces/${challenger[4]}.png`}
+                      src={`/dice_faces/${challenger.die[4]}.png`}
                       className="fill"
                       alt="5"
                     />
@@ -503,7 +525,7 @@ function ChallengePanel({ onClose, faces,
               </div>
 
               <div className = "center">
-                <p><b>[user] <br /> Rolled</b></p>
+                <p><b>{challenger.username} <br /> Rolled</b></p>
                 <img
                   src={`/dice_faces/${enemyRoll}.png`}
                   style = {{ width: "100px" }}

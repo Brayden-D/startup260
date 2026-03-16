@@ -14,7 +14,7 @@ let apiRouter = express.Router();
 app.use('/api', apiRouter);
 
 let users = [];
-let dice = []
+let dice = [{username: "default", die: [1, 2, 3, 4, 5, 6]}]
 let scores = [];
 
 // USERS
@@ -66,20 +66,20 @@ const verifyAuth = async (req, res, next) => {
 };
 
 // DICE
-// GetSRandomDice
+// GetRandomDice
 apiRouter.get('/dice', verifyAuth, (_req, res) => {
   if (dice.length === 0) {
     res.status(404).send({ msg: "No dice available" });
     return;
   }
 
-  res.send(dice[Math.floor(Math.random() * dice.length)].die);
+  res.send(dice[Math.floor(Math.random() * dice.length)]);
 });
 
 // GetUserDie
 apiRouter.get('/die', verifyAuth, (req, res) => {
   const userDie = dice.find(d => d.username === req.user.username);
-  res.send(userDie.die);
+  res.send(userDie);
 });
 
 // UpdateUserDie
