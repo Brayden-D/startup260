@@ -15,17 +15,6 @@ export function Home({ maxStreak, setMaxStreak }) {
     { id: 3, text: "wow look at this websocket" }
   ]);
 
-  /* temp generator until database is implimented */
-  function generateChallenger() {
-    const arr = [0,0,0,0,0,0];
-
-    for (let i = 0; i < 21; i++) {
-      arr[Math.floor(Math.random() * 6)]++;
-    }
-
-    setChallenger(arr);
-  }
-
   const addNotification = (text) => {
     setNotifications((prev) => [
       ...prev,
@@ -99,7 +88,6 @@ export function Home({ maxStreak, setMaxStreak }) {
 
           <button className="bigbutton" 
             onClick={() => {
-              generateChallenger();
               setShowChallenge(true);
               }}>
             <b>Challenge</b>
@@ -267,7 +255,6 @@ export function Home({ maxStreak, setMaxStreak }) {
       {showChallenge && <ChallengePanel
         onClose={() => setShowChallenge(false)} 
         faces = {faces}
-        challenger = {challenger}
         streak = {streak}
         setStreak = {setStreak}
         maxStreak = {maxStreak}
@@ -356,31 +343,62 @@ export function EditDiePanel({ onClose, faces, setFaces }) {
   );
 }
 
-function ChallengePanel({ onClose, faces, challenger, 
+function ChallengePanel({ onClose, faces,
   streak, setStreak, 
   maxStreak, setMaxStreak}) {
 
   const [userRoll, setUserRoll] = useState(null);
   const [enemyRoll, setEnemyRoll] = useState(null);
+  const [challenger, setChallenger] = useState([0,0,0,0,0,0]);
 
-  function handleChallenge() {
+  useEffect(() => {
+    async function fetchChallenger() {
+      try {
+        const res = await fetch("/api/dice", {
+          method: "GET",
+          credentials: "include"
+        });
+
+        //if (!res.ok) return;
+
+        const die = await res.json();
+        setChallenger(die);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchChallenger();
+  }, []);
+
+  async function handleChallenge() {
     const userResult = rollDie(faces);
     const enemyResult = rollDie(challenger);
 
     setUserRoll(userResult);
     setEnemyRoll(enemyResult);
 
+    let newStreak = streak;
+
     if (userResult > enemyResult) {
-      setStreak(prev => {
-        const newStreak = prev + 1;
-
-        setMaxStreak(max => Math.max(max, newStreak));
-
-        return newStreak;
-      });
+      newStreak = streak + 1;
+      setStreak(newStreak);
+      setMaxStreak(max => Math.max(max, newStreak));
     } 
     else if (userResult < enemyResult) {
+      newStreak = 0;
       setStreak(0);
+    }
+
+    try {
+      await fetch("/api/score", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ score: newStreak })
+      });
+    } catch (err) {
+      console.error("Failed to save score", err);
     }
   }
 
@@ -472,10 +490,10 @@ function ChallengePanel({ onClose, faces, challenger,
         )}
 
         {userRoll !== null && (
-          <div class = "centerdiv">
+          <div className = "centerdiv">
             <div style={{ display: "flex", justifyContent: "center", gap: "30px" }}>
               
-              <div class = "center">
+              <div className = "center">
                 <p><b>You <br /> Rolled</b></p>
                 <img
                   src={`/dice_faces/${userRoll}.png`}
@@ -484,7 +502,7 @@ function ChallengePanel({ onClose, faces, challenger,
                 />
               </div>
 
-              <div class = "center">
+              <div className = "center">
                 <p><b>[user] <br /> Rolled</b></p>
                 <img
                   src={`/dice_faces/${enemyRoll}.png`}
