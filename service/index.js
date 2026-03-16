@@ -72,13 +72,13 @@ apiRouter.get('/dice', verifyAuth, (_req, res) => {
     return;
   }
 
-  res.send(dice[Math.floor(Math.random() * dice.length)]);
+  res.send(dice[Math.floor(Math.random() * dice.length)].die);
 });
 
 // GetUserDie
-apiRouter.get('/die', verifyAuth, async (req, res) => {
-  const user = await findUser('token', req.cookies[authCookieName]);
-  res.send(user.die);
+apiRouter.get('/die', verifyAuth, (req, res) => {
+  const userDie = dice.find(d => d.username === req.user.username);
+  res.send(userDie.die);
 });
 
 // UpdateUserDie
@@ -134,6 +134,10 @@ async function createUser(username, password) {
   const passwordHash = await bcrypt.hash(password, 10);
   const die = [1, 2, 3, 4, 5, 6]
 
+    if (users.findIndex(d => d.username === username) !== -1) {
+      return "error: user already exists"
+    }
+
   const user = {
     username: username,
     password: passwordHash,
@@ -145,10 +149,6 @@ async function createUser(username, password) {
   const userDie = {
     username: username,
     die: die
-  }
-
-  if (users.findIndex(d => d.username === username) !== -1) {
-    return "error: user already exists"
   }
 
   users.push(user);
@@ -189,6 +189,12 @@ function updateUserScore(newScore) {
 
   users[userIndex].score = newScore.score;
 
+  if (scoreIndex === -1) {
+    updateLeaderboard(newScore);
+    users[userIndex].maxScore = newScore.score;
+    return users[userIndex];
+  }
+
   const currentMax = scores[scoreIndex].score;
   if (newScore.score > currentMax) {
     users[userIndex].maxScore = newScore.score;
@@ -199,7 +205,9 @@ function updateUserScore(newScore) {
 }
 
 function updateLeaderboard(newScore) {
+  scores = scores.filter(s => s.username !== newScore.username);
   let found = false;
+
   for (const [i, prevScore] of scores.entries()) {
     if (newScore.score > prevScore.score) {
       scores.splice(i, 0, newScore);
