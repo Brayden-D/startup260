@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
@@ -10,7 +10,16 @@ export default function App() {
 
   const [username, setUsername] = useState("");
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [password, setPassword] = useState("");  
+  const [password, setPassword] = useState(""); 
+  
+  useEffect(() => {
+    fetch("/api/score", { method: "GET", credentials: "include" })
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data && data.username) setLoggedInUser(data.username);
+      })
+      .catch(() => setLoggedInUser(null));
+  }, []);
 
   async function handleLogin(isCreate = false) {
     if (loggedInUser) {
@@ -75,8 +84,8 @@ export default function App() {
                 <span className="nowrap"
                   style = {{ marginRight: "10px"}}>
                   Password:
-                  <input type="text" 
-                    placeholder="username" 
+                  <input type="password" 
+                    placeholder="password" 
                     value = {password}
                     onChange={(e) => setPassword(e.target.value)}
                     style = {{ marginLeft: "5px"}}
