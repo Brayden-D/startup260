@@ -57,6 +57,7 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 const verifyAuth = async (req, res, next) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   if (user) {
+    req.user = user;
     next();
   } else {
     res.status(401).send({ msg: 'Unauthorized' });
@@ -82,7 +83,11 @@ apiRouter.get('/die', verifyAuth, async (req, res) => {
 
 // UpdateUserDie
 apiRouter.post('/die', verifyAuth, (req, res) => {
-  const result = updateUserDie(req.body);
+  const result = updateUserDie({
+    username: req.user.username,
+    die: req.body.die
+  });
+
   res.send(result);
 });
 
@@ -94,7 +99,11 @@ apiRouter.get('/scores', verifyAuth, (_req, res) => {
 
 // SetUserScore
 apiRouter.post('/score', verifyAuth, async (req, res) => {
-  const score = updateUserScore(req.body);
+  const score = updateUserScore({
+    username: req.user.username,
+    score: req.body.score
+  });
+
   res.send(score);
 });
 
@@ -138,7 +147,7 @@ async function createUser(username, password) {
     die: die
   }
 
-  if (users.findIndex(d => d.username === username)) {
+  if (users.findIndex(d => d.username === username) !== -1) {
     return "error: user already exists"
   }
 
@@ -175,16 +184,18 @@ function updateUserDie(newDie) {
 }
 
 function updateUserScore(newScore) {
-  const userIndex = users.findIndex(d => d.username === newDie.username);
+  const userIndex = users.findIndex(d => d.username === newScore.username);
+  const scoreIndex = scores.findIndex(d => d.username === newScore.username);
 
   users[userIndex].score = newScore.score;
 
-  currentMax = scores[scoreIndex].score;
+  const currentMax = scores[scoreIndex].score;
   if (newScore.score > currentMax) {
     users[userIndex].maxScore = newScore.score;
     updateLeaderboard(newScore);
   }
 
+  return users[userIndex];
 }
 
 function updateLeaderboard(newScore) {
