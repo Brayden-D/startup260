@@ -9,19 +9,38 @@ import { About } from './about/about';
 export default function App() {
 
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [maxStreak, setMaxStreak] = useState(0);
-  
+  const [password, setPassword] = useState("");  
 
-  function handleLogin() {
+  async function handleLogin(isCreate = false) {
     if (loggedInUser) {
+      await fetch("/api/auth/logout", { method: "DELETE", credentials: "include" });
       setLoggedInUser(null);
       return;
     }
-    if (username && password) {
-      setLoggedInUser(username);
+    if (!username || !password) return;
+
+    const endpoint = isCreate ? "/api/auth/create" : "/api/auth/login";
+
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        alert(data.msg || "Login failed");
+        return;
+      }
+
+      const data = await res.json();
+      setLoggedInUser(data.username);
       setPassword("");
+    } catch (err) {
+
     }
   }
 
@@ -68,12 +87,12 @@ export default function App() {
 
               <span className="nowrap">
                 <button type="submit" 
-                onClick={handleLogin}>
+                onClick={() => handleLogin(false)}>
                   {loggedInUser ? "Logout" : "Login"}
                 </button>
                 {!loggedInUser && (
                   <button type="submit" 
-                    onClick={handleLogin}
+                    onClick={() => handleLogin(true)}
                     style = {{ marginLeft: "5px"}}>
                     Create
                   </button>
@@ -90,10 +109,9 @@ export default function App() {
       </header>
 
       <Routes>
-        <Route path='/' element={<Home 
-            maxStreak={maxStreak} setMaxStreak={setMaxStreak} />} exact />
+        <Route path='/' element={<Home  />} exact />
         <Route path='/leaderboard' element={<Leaderboard 
-            loggedInUser = {loggedInUser} maxStreak={maxStreak} />} />
+            loggedInUser = {loggedInUser} />} />
         <Route path='/about' element={<About />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
