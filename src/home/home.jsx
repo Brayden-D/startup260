@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import './home.css';
 import { generatePath } from "react-router-dom";
 
-export function Home({ maxStreak, setMaxStreak, loggedInUser }) {
+export function Home({ loggedInUser }) {
 
   const [showEdit, setShowEdit] = useState(false);
   const [showChallenge, setShowChallenge] = useState(false);
   const [faces, setFaces] = useState([1, 2, 3, 4, 5, 6]);
-  const [challenger, setChallenger] = useState([0, 0, 0, 0, 0, 0]);
   const [streak, setStreak] = useState(0);
+  const [maxStreak, setMaxStreak] = useState(0);
   const [notifications, setNotifications] = useState([
     { id: 1, text: "Placeholder notif 1" },
     { id: 2, text: "Placeholder notif 2" },
