@@ -66,18 +66,19 @@ const verifyAuth = async (req, res, next) => {
 // DICE
 // GetSRandomDice
 apiRouter.get('/dice', verifyAuth, (_req, res) => {
-  res.send(scores);
+  res.send(dice[Math.floor(Math.random() * dice.length)]);
 });
 
 // GetUserDie
-apiRouter.get('/die', verifyAuth, (_req, res) => {
-  res.send(score);
+apiRouter.get('/die', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+  res.send(user.die);
 });
 
 // UpdateUserDie
 apiRouter.post('/die', verifyAuth, (req, res) => {
-  scores = updateUserDie(req.body);
-  res.send(scores);
+  dice = updateUserDie(req.body);
+  res.send(dice);
 });
 
 // SCORES
@@ -87,8 +88,9 @@ apiRouter.get('/scores', verifyAuth, (_req, res) => {
 });
 
 // GetUserScore
-apiRouter.get('/score', verifyAuth, (_req, res) => {
-  res.send(score);
+apiRouter.get('/score', verifyAuth, async (_req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+  res.send(user.score);
 });
 
 // SubmitScore
@@ -96,8 +98,6 @@ apiRouter.post('/score', verifyAuth, (req, res) => {
   scores = updateScores(req.body);
   res.send(scores);
 });
-
-
 
 
 // Default error handler
@@ -114,8 +114,64 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-async function createUser() {}
-async function findUser() {}
-function updateUserDie() {}
-function updateScores() {}
-function setAuthCookie() {}
+
+// HELPER FUNCS
+async function createUser(username, password) {
+  const passwordHash = await bcrypt.hash(password, 10);
+  const die = [1, 2, 3, 4, 5, 6]
+
+  const user = {
+    username: username,
+    password: passwordHash,
+    token: uuid.v4(),
+  };
+
+  const userDie = {
+    username: username,
+    die: die
+  }
+
+  users.push(user);
+  dice.push(userDie);
+
+  return user;
+}
+
+async function findUser(field, value) {
+  if (!value) return null;
+
+  return users.find((u) => u[field] === value);
+}
+
+function setAuthCookie(res, authToken) {
+  res.cookie(authCookieName, authToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
+  });
+}
+
+function updateUserDie() {
+  
+}
+
+function updateScores(newScore) {
+  let found = false;
+  for (const [i, prevScore] of scores.entries()) {
+    if (newScore.score > prevScore.score) {
+      scores.splice(i, 0, newScore);
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    scores.push(newScore);
+  }
+
+  if (scores.length > 10) {
+    scores.length = 10;
+  }
+
+  return scores;
+}
