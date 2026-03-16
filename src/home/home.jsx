@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import './home.css';
 import { generatePath } from "react-router-dom";
 
-export function Home({ maxStreak, setMaxStreak }) {
+export function Home({ maxStreak, setMaxStreak, loggedInUser }) {
 
   const [showEdit, setShowEdit] = useState(false);
   const [showChallenge, setShowChallenge] = useState(false);
@@ -16,26 +16,42 @@ export function Home({ maxStreak, setMaxStreak }) {
   ]);
 
   useEffect(() => {
-    async function loadScore() {
+    if (!loggedInUser) return;
+
+    async function loadUserData() {
       try {
-        const res = await fetch("/api/score", {
-          method: "GET",
-          credentials: "include"
-        });
+        const [scoreRes, dieRes] = await Promise.all([
+          fetch("/api/score", {
+            method: "GET",
+            credentials: "include"
+          }),
+          fetch("/api/die", {
+            method: "GET",
+            credentials: "include"
+          })
+        ]);
 
-        if (!res.ok) return;
+        if (scoreRes.ok) {
+          const score = await scoreRes.json();
+          setStreak(score);
+          setMaxStreak(score);
+        }
 
-        const score = await res.json();
+        if (dieRes.ok) {
+          const data = await dieRes.json();
+          if (data?.die) {
+            setFaces(data.die);
+          }
+        }
 
-        setStreak(score);
-        setMaxStreak(score);
       } catch (err) {
-        console.error("Failed to load score", err);
+        console.error("Failed to load user data", err);
       }
     }
 
-    loadScore();
-  }, []);
+    loadUserData();
+
+  }, [loggedInUser]);
 
   const addNotification = (text) => {
     setNotifications((prev) => [
