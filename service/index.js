@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
@@ -9,6 +10,7 @@ const authCookieName = 'token';
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static('public'));
 
 let apiRouter = express.Router();
 app.use('/api', apiRouter);
@@ -124,7 +126,6 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-
 // HELPER FUNCS
 async function createUser(username, password) {
   const passwordHash = await bcrypt.hash(password, 10);
@@ -222,3 +223,7 @@ function updateLeaderboard(newScore) {
 
   return scores;
 }
+
+app.use((_req, res) => {
+  res.sendFile('index.html', { root: 'public' });
+});
