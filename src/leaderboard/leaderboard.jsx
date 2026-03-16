@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export function Leaderboard({ loggedInUser, maxStreak }) {
 
-  let entries = [
-    { id: 0, name: (loggedInUser? loggedInUser : "[You]"), streak: maxStreak},
-    { id: 1, name: "Alice", streak: 6 },
-    { id: 2, name: "Bob", streak: 3 }
-  ];
+  const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/scores", {
+      method: "GET",
+      credentials: "include"
+    })
+      .then((res) => res.json())
+      .then((data) => setEntries(data))
+      .catch((err) => console.error(err));
+  }, []);
 
   const sortedEntries = [...entries].sort(
-    (a, b) => b.streak - a.streak
+    (a, b) => b.score - a.score
   );
 
   return (
@@ -26,10 +32,10 @@ export function Leaderboard({ loggedInUser, maxStreak }) {
             <h1>Leaderboard</h1>
           </div>
 
-          <div style={{ textAlign: "left", width: "85%", height: "50vh" }}>
+          <div style={{ textAlign: "left", width: "85%", height: "50vh", overflowY: "auto" }}>
             {sortedEntries.map((entry, index) => (
-              <div key={entry.id}>
-                {index + 1}. {entry.name}: <b>{entry.streak}</b> in a row
+              <div key={entry.username}>
+                {index + 1}. {entry.username}: <b>{entry.score}</b> in a row
               </div>
             ))}
           </div>
