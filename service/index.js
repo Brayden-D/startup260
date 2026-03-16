@@ -66,6 +66,11 @@ const verifyAuth = async (req, res, next) => {
 // DICE
 // GetSRandomDice
 apiRouter.get('/dice', verifyAuth, (_req, res) => {
+  if (dice.length === 0) {
+    res.status(404).send({ msg: "No dice available" });
+    return;
+  }
+
   res.send(dice[Math.floor(Math.random() * dice.length)]);
 });
 
@@ -77,8 +82,8 @@ apiRouter.get('/die', verifyAuth, async (req, res) => {
 
 // UpdateUserDie
 apiRouter.post('/die', verifyAuth, (req, res) => {
-  dice = updateUserDie(req.body);
-  res.send(dice);
+  const result = updateUserDie(req.body);
+  res.send(result);
 });
 
 // SCORES
@@ -87,16 +92,16 @@ apiRouter.get('/scores', verifyAuth, (_req, res) => {
   res.send(scores);
 });
 
-// GetUserScore
-apiRouter.get('/score', verifyAuth, async (_req, res) => {
-  const user = await findUser('token', req.cookies[authCookieName]);
-  res.send(user.score);
+// SetUserScore
+apiRouter.post('/score', verifyAuth, async (req, res) => {
+  const score = updateUserScore(req.body);
+  res.send(score);
 });
 
-// SubmitScore
-apiRouter.post('/score', verifyAuth, (req, res) => {
-  scores = updateScores(req.body);
-  res.send(scores);
+// GetUserScore
+apiRouter.get('/score', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+  res.send(user.score);
 });
 
 
@@ -124,11 +129,17 @@ async function createUser(username, password) {
     username: username,
     password: passwordHash,
     token: uuid.v4(),
+    score: 0,
+    maxScore: 0
   };
 
   const userDie = {
     username: username,
     die: die
+  }
+
+  if (users.findIndex(d => d.username === username)) {
+    return "error: user already exists"
   }
 
   users.push(user);
@@ -155,7 +166,7 @@ function updateUserDie(newDie) {
   const i = dice.findIndex(d => d.username === newDie.username);
 
   if (i === -1) {
-    return "user not found";
+    return "error: user not found";
   }
 
   dice[i].die = newDie.die;
@@ -163,7 +174,20 @@ function updateUserDie(newDie) {
   return dice[i];
 }
 
-function updateScores(newScore) {
+function updateUserScore(newScore) {
+  const userIndex = users.findIndex(d => d.username === newDie.username);
+
+  users[userIndex].score = newScore.score;
+
+  currentMax = scores[scoreIndex].score;
+  if (newScore.score > currentMax) {
+    users[userIndex].maxScore = newScore.score;
+    updateLeaderboard(newScore);
+  }
+
+}
+
+function updateLeaderboard(newScore) {
   let found = false;
   for (const [i, prevScore] of scores.entries()) {
     if (newScore.score > prevScore.score) {
