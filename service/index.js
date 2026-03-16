@@ -7,10 +7,11 @@ const uuid = require('uuid');
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 const authCookieName = 'token';
 
-let apiRouter = express.Router();
-app.use(`/api`, apiRouter);
 app.use(express.json());
 app.use(cookieParser());
+
+let apiRouter = express.Router();
+app.use('/api', apiRouter);
 
 let users = [];
 let dice = []
@@ -117,11 +118,6 @@ apiRouter.get('/score', verifyAuth, async (req, res) => {
 // Default error handler
 app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, message: err.message });
-});
-
-// Return the application's default page if the path is unknown
-app.use((_req, res) => {
-  res.sendFile('index.html', { root: 'public' });
 });
 
 app.listen(port, () => {
