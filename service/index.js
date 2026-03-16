@@ -151,8 +151,19 @@ function setAuthCookie(res, authToken) {
   });
 }
 
-function updateUserDie() {
+function updateUserDie(newDie) {
+  const i = dice.findIndex(newDie.username)
+  if (i = -1) {
+    return "user not found";
+  }
   
+  const userDie = {
+    username: username,
+    die: newDie
+  }
+
+  dice[i] = userDie
+  return "success";
 }
 
 function updateScores(newScore) {
