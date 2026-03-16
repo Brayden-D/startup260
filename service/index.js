@@ -152,18 +152,15 @@ function setAuthCookie(res, authToken) {
 }
 
 function updateUserDie(newDie) {
-  const i = dice.findIndex(newDie.username)
-  if (i = -1) {
+  const i = dice.findIndex(d => d.username === newDie.username);
+
+  if (i === -1) {
     return "user not found";
   }
-  
-  const userDie = {
-    username: username,
-    die: newDie
-  }
 
-  dice[i] = userDie
-  return "success";
+  dice[i].die = newDie.die;
+
+  return dice[i];
 }
 
 function updateScores(newScore) {
