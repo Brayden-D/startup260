@@ -34,6 +34,7 @@ apiRouter.post('/auth/login', async (req, res) => {
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       user.token = uuid.v4();
+      await DB.updateUser(user); 
       setAuthCookie(res, user.token);
       res.send({ username: user.username });
       return;
@@ -46,7 +47,7 @@ apiRouter.post('/auth/login', async (req, res) => {
 apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   if (user) {
-    delete user.token;
+    await DB.updateUserRemoveAuth(user);
   }
   res.clearCookie(authCookieName);
   res.status(204).end();
@@ -94,13 +95,14 @@ apiRouter.post('/die', verifyAuth, async (req, res) => {
 
 // SCORES
 // GetScores
-apiRouter.get('/scores', verifyAuth, (_req, res) => {
+apiRouter.get('/scores', verifyAuth, async (_req, res) => {
+  const scores = await DB.getHighScores();
   res.send(scores);
 });
 
 // SetUserScore
 apiRouter.post('/score', verifyAuth, async (req, res) => {
-  const score = updateUserScore({
+  const score = await updateUserScore({
     username: req.user.username,
     score: req.body.score
   });
