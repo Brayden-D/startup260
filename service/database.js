@@ -40,18 +40,38 @@ async function updateUserRemoveAuth(user) {
 }
 
 //dice
-async function getRandomDie() {
+async function getRandomDie(username) {
+  const query = { username: { $ne: username } };
 
+  const count = await diceCollection.countDocuments(query);
+
+  if (count === 0) {
+    return null;
+  }
+
+  const random = Math.floor(Math.random() * count);
+
+  const result = await diceCollection
+    .find(query)
+    .skip(random)
+    .limit(1)
+    .toArray();
+
+  return result[0];
 }
-
 
 async function getUserDie(username) {
-
+  return diceCollection.findOne({ username: username });
 }
 
-
 async function updateUserDie(username, newDie) {
+  const existing = await diceCollection.findOne({ username: username });
+    await diceCollection.updateOne(
+      { username: username },
+      { $set: { die: newDie } }
+    );
 
+  return { username, die: newDie };
 }
 
 //scores
