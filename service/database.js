@@ -44,9 +44,9 @@ async function getRandomDie() {
 
 }
 
-// Get a specific user's die
+
 async function getUserDie(username) {
-    
+
 }
 
 
@@ -60,14 +60,40 @@ async function addScore(score) {
 }
 
 function getHighScores() {
-  const query = { score: { $gt: 0, $lt: 900 } };
+  const query = {};
   const options = {
     sort: { score: -1 },
-    limit: 10,
+    limit: 50,
   };
-  const cursor = scoreCollection.find(query, options);
-  return cursor.toArray();
+
+  return scoreCollection.find(query, options).toArray();
 }
+
+async function updateUserScore(username, newScore) {
+  const user = await getUser(username);
+
+  if (!user) return null;
+
+  const maxScore = Math.max(user.maxScore || 0, newScore);
+
+  await userCollection.updateOne(
+    { username: username },
+    {
+      $set: {
+        score: newScore,
+        maxScore: maxScore,
+      },
+    }
+  );
+
+  return { score: newScore, maxScore };
+}
+
+async function getUserScore(username) {
+  const user = await getUser(username);
+  return user?.score;
+}
+
 
 module.exports = {
   getUser,
