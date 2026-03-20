@@ -65,24 +65,26 @@ const verifyAuth = async (req, res, next) => {
 
 // DICE
 // GetRandomDice
-apiRouter.get('/dice', verifyAuth, (_req, res) => {
-  if (dice.length === 0) {
+apiRouter.get('/dice', verifyAuth, async (req, res) => {
+  const die = await DB.getRandomDie(req.user.username);
+
+  if (!die) {
     res.status(404).send({ msg: "No dice available" });
     return;
   }
 
-  res.send(dice[Math.floor(Math.random() * dice.length)]);
+  res.send(die);
 });
 
 // GetUserDie
-apiRouter.get('/die', verifyAuth, (req, res) => {
-  const userDie = dice.find(d => d.username === req.user.username);
+apiRouter.get('/die', verifyAuth, async (req, res) => {
+  const userDie = await DB.getUserDie(req.user.username);
   res.send(userDie);
 });
 
 // UpdateUserDie
-apiRouter.post('/die', verifyAuth, (req, res) => {
-  const result = updateUserDie({
+apiRouter.post('/die', verifyAuth, async (req, res) => {
+  const result = await updateUserDie({
     username: req.user.username,
     die: req.body.die
   });
