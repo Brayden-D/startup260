@@ -4,6 +4,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
+const DB = require('./database.js');
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 const authCookieName = 'token';
@@ -11,13 +12,8 @@ const authCookieName = 'token';
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
-
 let apiRouter = express.Router();
 app.use('/api', apiRouter);
-
-let users = [];
-let dice = [{username: "default", die: [1, 2, 3, 4, 5, 6]}]
-let scores = [];
 
 // USERS
 // CreateAuth a new user
@@ -131,9 +127,10 @@ async function createUser(username, password) {
   const passwordHash = await bcrypt.hash(password, 10);
   const die = [1, 2, 3, 4, 5, 6]
 
-    if (users.findIndex(d => d.username === username) !== -1) {
-      return "error: user already exists"
-    }
+  const existing = await DB.getUser(username);
+  if (existing) {
+    return "error: user already exists"
+  }
 
   const user = {
     username: username,
@@ -148,8 +145,8 @@ async function createUser(username, password) {
     die: die
   }
 
-  users.push(user);
-  dice.push(userDie);
+  await DB.addUser(user);
+  await DB.updateUserDie(username, [1, 2, 3, 4, 5, 6]);
 
   return user;
 }
@@ -157,7 +154,15 @@ async function createUser(username, password) {
 async function findUser(field, value) {
   if (!value) return null;
 
-  return users.find((u) => u[field] === value);
+  if (field === 'token') {
+    return await DB.getUserByToken(value);
+  }
+
+  if (field === 'username') {
+    return await DB.getUser(value);
+  }
+
+  return null;
 }
 
 function setAuthCookie(res, authToken) {
@@ -168,60 +173,28 @@ function setAuthCookie(res, authToken) {
   });
 }
 
-function updateUserDie(newDie) {
-  const i = dice.findIndex(d => d.username === newDie.username);
-
-  if (i === -1) {
+async function updateUserDie(newDie) {
+  const result = await DB.updateUserDie(newDie.username, newDie.die);
+  if (!result) {
     return "error: user not found";
   }
 
-  dice[i].die = newDie.die;
-
-  return dice[i];
+  return result;
 }
 
-function updateUserScore(newScore) {
-  const userIndex = users.findIndex(d => d.username === newScore.username);
-  const scoreIndex = scores.findIndex(d => d.username === newScore.username);
+async function updateUserScore(newScore) {
+  const userResult = await DB.updateUserScore(
+    newScore.username,
+    newScore.score
+  );
 
-  users[userIndex].score = newScore.score;
-
-  if (scoreIndex === -1) {
-    updateLeaderboard(newScore);
-    users[userIndex].maxScore = newScore.score;
-    return users[userIndex];
+  if (!userResult) {
+    return "error: user not found";
   }
 
-  const currentMax = scores[scoreIndex].score;
-  if (newScore.score > currentMax) {
-    users[userIndex].maxScore = newScore.score;
-    updateLeaderboard(newScore);
-  }
+  await DB.addScore(newScore);
 
-  return users[userIndex];
-}
-
-function updateLeaderboard(newScore) {
-  scores = scores.filter(s => s.username !== newScore.username);
-  let found = false;
-
-  for (const [i, prevScore] of scores.entries()) {
-    if (newScore.score > prevScore.score) {
-      scores.splice(i, 0, newScore);
-      found = true;
-      break;
-    }
-  }
-
-  if (!found) {
-    scores.push(newScore);
-  }
-
-  if (scores.length > 10) {
-    scores.length = 10;
-  }
-
-  return scores;
+  return userResult;
 }
 
 app.use((_req, res) => {
