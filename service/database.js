@@ -3,11 +3,11 @@ const config = require('./dbConfig.json');
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
-const db = client.db('simon');
+const db = client.db('startup');
 const userCollection = db.collection('user');
-const scoreCollection = db.collection('score');
+const diceCollection = db.collection("dice");
+const scoreCollection = db.collection('scores');
 
-// This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
   try {
     await db.command({ ping: 1 });
@@ -18,6 +18,7 @@ const scoreCollection = db.collection('score');
   }
 })();
 
+//users
 function getUser(username) {
   return userCollection.findOne({ username: username });
 }
@@ -38,6 +39,22 @@ async function updateUserRemoveAuth(user) {
   await userCollection.updateOne({ username: user.username }, { $unset: { token: 1 } });
 }
 
+//dice
+async function getRandomDie() {
+
+}
+
+// Get a specific user's die
+async function getUserDie(username) {
+    
+}
+
+
+async function updateUserDie(username, newDie) {
+
+}
+
+//scores
 async function addScore(score) {
   return scoreCollection.insertOne(score);
 }
