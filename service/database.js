@@ -121,6 +121,13 @@ module.exports = {
   addUser,
   updateUser,
   updateUserRemoveAuth,
+
+  getRandomDie,
+  getUserDie,
+  updateUserDie,
+
   addScore,
   getHighScores,
+  updateUserScore,
+  getUserScore,
 };
