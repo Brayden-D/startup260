@@ -1,7 +1,7 @@
 const GameEvent = {
   System: 'system',
-  End: 'gameEnd',
-  Start: 'gameStart',
+  Streak: 'streak',
+  DieNotif: 'dieNotif',
 };
 
 class EventMessage {
