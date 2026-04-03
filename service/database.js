@@ -46,7 +46,7 @@ async function getRandomDie(username) {
   const count = await diceCollection.countDocuments(query);
 
   if (count === 0) {
-    return null;
+    return null; 
   }
 
   const random = Math.floor(Math.random() * count);
@@ -65,10 +65,10 @@ async function getUserDie(username) {
 }
 
 async function updateUserDie(username, newDie) {
-  const existing = await diceCollection.findOne({ username: username });
     await diceCollection.updateOne(
       { username: username },
-      { $set: { die: newDie } }
+      { $set: { die: newDie } },
+      { upsert: true }
     );
 
   return { username, die: newDie };
@@ -76,7 +76,11 @@ async function updateUserDie(username, newDie) {
 
 //scores
 async function addScore(score) {
-  return scoreCollection.insertOne(score);
+  await scoreCollection.updateOne(
+    { username: score.username, score: { $lt: score.score } },
+    { $set: { score: score.score } },
+    { upsert: true }
+  );
 }
 
 function getHighScores() {

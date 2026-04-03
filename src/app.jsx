@@ -38,6 +38,7 @@ export default function App() {
         credentials: "include",
         body: JSON.stringify({ username, password }),
       });
+      console.log("status:", res.status);
 
       if (!res.ok) {
         const data = await res.json();
@@ -49,7 +50,8 @@ export default function App() {
       setLoggedInUser(data.username);
       setPassword("");
     } catch (err) {
-
+      console.error(err);
+      alert("Login request failed");
     }
   }
 
