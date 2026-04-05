@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './home.css';
 import { generatePath } from "react-router-dom";
+import { GameEvent, GameNotifier } from "./gameNotifier";
 
 export function Home({ loggedInUser }) {
 
@@ -9,11 +10,7 @@ export function Home({ loggedInUser }) {
   const [faces, setFaces] = useState([1, 2, 3, 4, 5, 6]);
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
-  const [notifications, setNotifications] = useState([
-    { id: 1, text: "Placeholder notif 1" },
-    { id: 2, text: "Placeholder notif 2" },
-    { id: 3, text: "wow look at this websocket" }
-  ]);
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     if (!loggedInUser) return;
@@ -54,10 +51,10 @@ export function Home({ loggedInUser }) {
   }, [loggedInUser]);
 
   const addNotification = (text) => {
-    setNotifications((prev) => [
-      ...prev,
-      { id: Date.now(), text }
-    ]);
+    setNotifications((prev) => {
+      const updated = [...prev, { id: Date.now(), text }];
+      return updated.slice(-10);
+    });
   };
 
   const removeNotification = (id) => {
@@ -66,21 +63,30 @@ export function Home({ loggedInUser }) {
     );
   };
 
-  useEffect(() => {
-    const messages = [
-      "Your die was beaten by Bob!",
-      "Alice is on a streak!",
-      "Your die tied with Alice!",
-    ];
+useEffect(() => {
+    function handleGameEvent(event) {
+      let message = "";
 
-    const interval = setInterval(() => {
-      const randomMessage =
-        messages[Math.floor(Math.random() * messages.length)];
+      if (event.type === GameEvent.Streak) {
+        message = `${event.from} is on a streak of ${event.value.streak}`;
+      } 
+      else if (event.type === GameEvent.DieNotif) {
+        message = `${event.from} rolled a ${event.value.roll}`;
+      } 
+      else if (event.type === GameEvent.System) {
+        message = event.value.msg;
+      }
 
-      addNotification(randomMessage);
-    }, 45000 + Math.random() * 30000);
+      if (message) {
+        addNotification(message);
+      }
+    }
 
-    return () => clearInterval(interval);
+    GameNotifier.addHandler(handleGameEvent);
+
+    return () => {
+      GameNotifier.removeHandler(handleGameEvent);
+    };
   }, []);
 
   return (
