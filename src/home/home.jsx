@@ -303,6 +303,7 @@ export function Home({ loggedInUser }) {
       {showChallenge && <ChallengePanel
         onClose={() => setShowChallenge(false)} 
         faces = {faces}
+        loggedInUser = {loggedInUser}
         streak = {streak}
         setStreak = {setStreak}
         maxStreak = {maxStreak}
@@ -391,7 +392,7 @@ export function EditDiePanel({ onClose, faces, setFaces }) {
   );
 }
 
-function ChallengePanel({ onClose, faces,
+function ChallengePanel({ onClose, faces, loggedInUser,
   streak, setStreak, 
   maxStreak, setMaxStreak}) {
 
@@ -426,12 +427,25 @@ function ChallengePanel({ onClose, faces,
     setUserRoll(userResult);
     setEnemyRoll(enemyResult);
 
+    GameNotifier.broadcastEvent(loggedInUser, GameEvent.DieNotif, {
+      defender: challenger.username,
+      gameStatus: userResult > enemyResult ? "won" 
+                : userResult < enemyResult ? "lost" 
+                : "tied"
+    });
+
     let newStreak = streak;
 
     if (userResult > enemyResult) {
       newStreak = streak + 1;
       setStreak(newStreak);
       setMaxStreak(max => Math.max(max, newStreak));
+
+      if (newStreak % 5 === 0) {
+        GameNotifier.broadcastEvent(loggedInUser, GameEvent.Streak, {
+            streak: newStreak
+          });
+      }
     } 
     else if (userResult < enemyResult) {
       newStreak = 0;
