@@ -429,8 +429,8 @@ function ChallengePanel({ onClose, faces, loggedInUser,
 
     GameNotifier.broadcastEvent(loggedInUser, GameEvent.DieNotif, {
       defender: challenger.username,
-      gameStatus: userResult > enemyResult ? "won" 
-                : userResult < enemyResult ? "lost" 
+      gameStatus: userResult > enemyResult ? "lost" 
+                : userResult < enemyResult ? "won" 
                 : "tied"
     });
 
