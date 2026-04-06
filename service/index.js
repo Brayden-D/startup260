@@ -9,11 +9,23 @@ const DB = require('./database.js');
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 const authCookieName = 'token';
 
+const http = require('http');
+const server = http.createServer(app);
+const { peerProxy } = require('./peerProxy');
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
 let apiRouter = express.Router();
 app.use('/api', apiRouter);
+
+process.on('uncaughtException', (err) => {
+  console.error('UNCAUGHT EXCEPTION:', err);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.error('UNHANDLED REJECTION:', err);
+});
 
 // USERS
 // CreateAuth a new user
@@ -122,8 +134,9 @@ app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, message: err.message });
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+peerProxy(server);
+server.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
 
 // HELPER FUNCS
