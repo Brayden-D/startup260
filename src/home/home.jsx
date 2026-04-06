@@ -63,31 +63,35 @@ export function Home({ loggedInUser }) {
     );
   };
 
-useEffect(() => {
-    function handleGameEvent(event) {
-      let message = "";
+  useEffect(() => {
+      function handleGameEvent(event) {
+        if (event.from === loggedInUser) return;
+        let message = "";
 
-      if (event.type === GameEvent.Streak) {
-        message = `${event.from} is on a streak of ${event.value.streak}`;
-      } 
-      else if (event.type === GameEvent.DieNotif) {
-        message = `${event.from} rolled a ${event.value.roll}`;
-      } 
-      else if (event.type === GameEvent.System) {
-        message = event.value.msg;
+        if (event.type === GameEvent.Streak) {
+          message = `${event.from} is on a streak of ${event.value.streak}!`;
+        } 
+        else if (event.type === GameEvent.DieNotif) {
+          if (event.value.defender == loggedInUser) {
+            // gamestatus is either won, lost, or tied
+              message = `Your dice ${event.value.gameStatus} against ${event.from}!`;
+          }
+        } 
+        else if (event.type === GameEvent.System) {
+          message = event.value.msg;
+        }
+
+        if (message) {
+          addNotification(message);
+        }
       }
 
-      if (message) {
-        addNotification(message);
-      }
-    }
+      GameNotifier.addHandler(handleGameEvent);
 
-    GameNotifier.addHandler(handleGameEvent);
-
-    return () => {
-      GameNotifier.removeHandler(handleGameEvent);
-    };
-  }, []);
+      return () => {
+        GameNotifier.removeHandler(handleGameEvent);
+      };
+    }, [loggedInUser]);
 
   return (
     <div>
