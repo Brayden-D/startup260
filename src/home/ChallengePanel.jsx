@@ -12,7 +12,8 @@ export function ChallengePanel({
 }) {
   const [userRoll, setUserRoll] = useState(null);
   const [enemyRoll, setEnemyRoll] = useState(null);
-  const [challenger, setChallenger] = useState({ username: "opponent", die: [1,2,3,4,5,6] });
+  const [challenger, setChallenger] = useState({ username: "opponent", die: [0,0,0,0,0,0] });
+  const placeholderDie = [0,0,0,0,0,0]
 
   useEffect(() => {
     async function fetchChallenger() {
@@ -76,12 +77,14 @@ export function ChallengePanel({
     }
   }
 
+  const displayDie = challenger.die || placeholderDie;
+
   return (
     <div className="popup" onClick={onClose}>
       <div className="popup-content panel" onClick={(e) => e.stopPropagation()}>
         <h2>Challenge</h2>
 
-        {userRoll == null && challenger.die && (
+        {userRoll == null && (
           <div>
             {challenger.username}'s die
             <div className="centerdiv">
@@ -91,32 +94,32 @@ export function ChallengePanel({
                   <tr>
                     <td></td>
                     <td style={{ backgroundColor: "purple" }}>
-                      <img src={`/dice_faces/${challenger.die[0]}.png`} className="fill" alt="1" />
+                      <img src={`/dice_faces/${displayDie[0]}.png`} className="fill" alt="1" />
                     </td>
                     <td></td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: "green" }}>
-                      <img src={`/dice_faces/${challenger.die[2]}.png`} className="fill" alt="3" />
+                      <img src={`/dice_faces/${displayDie[2]}.png`} className="fill" alt="3" />
                     </td>
                     <td style={{ backgroundColor: "red" }}>
-                      <img src={`/dice_faces/${challenger.die[1]}.png`} className="fill" alt="2" />
+                      <img src={`/dice_faces/${displayDie[1]}.png`} className="fill" alt="2" />
                     </td>
                     <td style={{ backgroundColor: "yellow" }}>
-                      <img src={`/dice_faces/${challenger.die[3]}.png`} className="fill" alt="4" />
+                      <img src={`/dice_faces/${displayDie[3]}.png`} className="fill" alt="4" />
                     </td>
                   </tr>
                   <tr>
                     <td></td>
                     <td style={{ backgroundColor: "orange" }}>
-                      <img src={`/dice_faces/${challenger.die[5]}.png`} className="fill" alt="6" />
+                      <img src={`/dice_faces/${displayDie[5]}.png`} className="fill" alt="6" />
                     </td>
                     <td></td>
                   </tr>
                   <tr>
                     <td></td>
                     <td style={{ backgroundColor: "blue" }}>
-                      <img src={`/dice_faces/${challenger.die[4]}.png`} className="fill" alt="5" />
+                      <img src={`/dice_faces/${displayDie[4]}.png`} className="fill" alt="5" />
                     </td>
                     <td></td>
                   </tr>
