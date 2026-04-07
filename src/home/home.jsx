@@ -94,7 +94,7 @@ export function Home({ loggedInUser }) {
     }, [loggedInUser]);
 
   return (
-    <div>
+    <div className="app-container">
       <aside className="notifbox panel">
         <div
           className="centerdiv"

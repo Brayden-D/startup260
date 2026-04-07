@@ -119,13 +119,18 @@ export default function App() {
         </table>
       </header>
 
-      <Routes>
-        <Route path='/' element={<Home  loggedInUser = {loggedInUser}/>} exact />
-        <Route path='/leaderboard' element={<Leaderboard 
-            loggedInUser = {loggedInUser} />} />
-        <Route path='/about' element={<About />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+      <div style={{ flex: 1 }}>
+        <Routes>
+          <Route path='/' element={<Home  loggedInUser = {loggedInUser}/>} exact />
+          <Route path='/leaderboard' element={<Leaderboard 
+              loggedInUser = {loggedInUser} />} />
+          <Route path='/about' element={<About />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </div>
+
+      <br />
+      <br />
 
       <footer className="footer">
         <table style={{ width: "100%" }}>

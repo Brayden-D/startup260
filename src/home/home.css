@@ -8,7 +8,6 @@ div.notification {
   margin-top: 10px;
 }
 
-/* Hidden and takes NO space */
 .remove-btn {
   display: none;
   border: none;
@@ -121,13 +120,11 @@ td.centertablecell {
 }
 
 .footer {
-  position: fixed; 
-  bottom: 0; 
-  left: 0; 
   width: 100%;
   background-color: tan;
   padding-left: 10px;
   padding-right: 10px;
+  margin-top: auto;
 }
 
 aside.notifpanel {

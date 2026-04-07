@@ -38,7 +38,6 @@ td.centertablecell {
   background-image: url("/felt.png");
   background-size: cover;
   margin: 0px;
-  height: 100vh;
   background-color: gray;
 }
 
@@ -50,9 +49,6 @@ td.centertablecell {
 }
 
 .footer {
-  position: fixed; 
-  bottom: 0; 
-  left: 0; 
   width: 100%;
   background-color: tan;
   padding-left: 10px;
