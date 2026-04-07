@@ -65,15 +65,17 @@ export function ChallengePanel({
       setStreak(0);
     }
 
-    try {
-      await fetch("/api/score", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ score: newStreak })
-      });
-    } catch (err) {
-      console.error("Failed to save score", err);
+    if (newStreak > maxStreak) {
+      try {
+        await fetch("/api/score", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ score: newStreak })
+        });
+      } catch (err) {
+        console.error("Failed to save score", err);
+      }
     }
   }
 
