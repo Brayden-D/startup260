@@ -36,9 +36,13 @@ td.centertablecell {
 
 .background {
   background-image: url("/felt.png");
+  background-color: tan;
   background-size: cover;
   margin: 0px;
+  min-height: 100vh;
   background-color: gray;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {

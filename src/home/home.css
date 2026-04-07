@@ -110,6 +110,8 @@ td.centertablecell {
   background-image: url("../images/felt.png");
   background-size: cover;
   margin: 0px;
+  overflow-x: auto;
+  min-width: 1000px;
 }
 
 .header {
@@ -127,31 +129,28 @@ td.centertablecell {
   margin-top: auto;
 }
 
-aside.notifpanel {
-  position: fixed;
+.notifpanel {
   background-color: rgb(245, 229, 186);
+  min-width: 200px;
+  min-height: 100%;
   width: 15%;
   height: 50%;
+  min-height: 300px;
   padding: 5px;
   border: 3px solid tan;
   border-radius: 10px;
   box-sizing: border-box;
-
-  left: 20px;
-  top: 90px
+  overflow-y: auto;
+  overflow-x: hidden; 
 }
 
-aside.scorepanel {
-  position: fixed;
+.scorepanel {
   background-color: rgb(245, 229, 186);
-  width: 15%;
+  width: 200px;
   padding: 5px;
   border: 3px solid tan;
   border-radius: 10px;
   box-sizing: border-box;
-
-  right: 20px;
-  top: 90px
 }
 
 

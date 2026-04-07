@@ -76,7 +76,7 @@ export function Home({ loggedInUser }) {
         else if (event.type === GameEvent.DieNotif) {
           if (event.value.defender == loggedInUser) {
             // gamestatus is either won, lost, or tied
-              message = `Your dice ${event.value.gameStatus} against ${event.from}!`;
+            message = `Your dice ${event.value.gameStatus} against ${event.from}!`;
           }
         } 
         else if (event.type === GameEvent.System) {
@@ -97,42 +97,6 @@ export function Home({ loggedInUser }) {
 
   return (
     <div className="app-container">
-      <aside className="notifbox panel">
-        <div
-          className="centerdiv"
-          style={{
-            backgroundColor: "tan",
-            fontFamily: "Roboto",
-            height: "25px",
-            lineHeight: "25px",
-          }}
-        >
-          <b>Notifications</b>
-        </div>
-
-        {notifications.map((notif) => (
-          <div key={notif.id}>
-            <div className="notification">
-              {notif.text}
-              <br />
-              <button 
-                className = "remove-btn"
-                onClick={() => removeNotification(notif.id)}>
-                ✖
-              </button>
-            </div>
-          </div>
-        ))}
-      </aside>
-
-      <aside className="scorepanel">
-        <div>
-              <b>Current Streak: {streak}</b>
-              <br />
-              <b>Best Streak: {maxStreak}</b>
-          </div>
-      </aside>
-
       <main>
         <br />
 
@@ -159,10 +123,45 @@ export function Home({ loggedInUser }) {
         {/* pain and suffering, generally */}
 
         <div className="centerdiv">
-          <table style={{ width: "50%" }}>
+          <table style={{ width: "100%" }}>
             <tbody>
               <tr>
-                <td style={{ width: "50%" }} className="centerdiv">
+                <td style={{
+                    min_width: "25%",
+                    min_height: "100px",
+                    verticalAlign: "top",
+                    display: "flex",
+                    justifyContent: "center"
+                }}>
+                  <div className="notifpanel panel">
+                    <div
+                      className="centerdiv"
+                      style={{
+                        backgroundColor: "tan",
+                        fontFamily: "Roboto",
+                        height: "25px",
+                        lineHeight: "25px",
+                      }}
+                    >
+                      <b>Notifications</b>
+                    </div>
+
+                    {notifications.map((notif) => (
+                      <div key={notif.id}>
+                        <div className="notification">
+                          {notif.text}
+                          <br />
+                          <button 
+                            className = "remove-btn"
+                            onClick={() => removeNotification(notif.id)}>
+                            ✖
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </td>
+                <td style={{ width: "30%", padding: "50px" }} className="centerdiv">
                   <table className="center" style={{ margin: "auto" }}>
                     <tbody>
                       <tr>
@@ -281,6 +280,19 @@ export function Home({ loggedInUser }) {
                         />
                       </div>
                     </div>
+                  </div>
+                </td>
+                <td style={{
+                    min_width: "10%",
+                    min_height: "100%",
+                    verticalAlign: "top",
+                    display: "flex",
+                    justifyContent: "center"
+                }}>
+                  <div className="scorepanel">
+                      <b>Current Streak: {streak}</b>
+                      <br />
+                      <b>Best Streak: {maxStreak}</b>
                   </div>
                 </td>
               </tr>
