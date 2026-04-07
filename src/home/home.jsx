@@ -125,6 +125,14 @@ export function Home({ loggedInUser }) {
         ))}
       </aside>
 
+      <aside className="scorepanel">
+        <div>
+              <b>Current Streak: {streak}</b>
+              <br />
+              <b>Best Streak: {maxStreak}</b>
+          </div>
+      </aside>
+
       <main>
         <br />
 
@@ -278,21 +286,6 @@ export function Home({ loggedInUser }) {
               </tr>
             </tbody>
           </table>
-          <br />
-          <br />
-          <div style = {{ 
-            backgroundColor: "rgb(245, 229, 186)",
-            minWidth: "100px",
-            borderRadius: "10px",
-            border: "3px solid tan",
-            padding: "3px",
-            paddingLeft: "5px",
-            paddingRight: "5px"
-          }}>
-              <b>Current Streak: {streak}</b>
-              <br />
-              <b>Best Streak: {maxStreak}</b>
-          </div>
         </div>
       </main>
 
