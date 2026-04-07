@@ -77,8 +77,10 @@ async function updateUserDie(username, newDie) {
 //scores
 async function addScore(score) {
   await scoreCollection.updateOne(
-    { username: score.username, score: { $lt: score.score } },
-    { $set: { score: score.score } },
+    { username: score.username },  
+    {
+      $max: { score: score.score }
+    },
     { upsert: true }
   );
 }
