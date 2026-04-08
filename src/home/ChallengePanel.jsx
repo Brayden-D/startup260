@@ -14,6 +14,8 @@ export function ChallengePanel({
   const [enemyRoll, setEnemyRoll] = useState(null);
   const [challenger, setChallenger] = useState({ username: "opponent", die: [0,0,0,0,0,0] });
   const placeholderDie = [0,0,0,0,0,0]
+  const displayDie = challenger.die || placeholderDie;
+  const odds = calculateOdds(faces, displayDie);
 
   useEffect(() => {
     async function fetchChallenger() {
@@ -35,6 +37,28 @@ export function ChallengePanel({
   function rollDie(die) {
     const index = Math.floor(Math.random() * 6);
     return die[index];
+  }
+
+  function calculateOdds(userDie, enemyDie) {
+    let win = 0;
+    let tie = 0;
+    let loss = 0;
+
+    for (let u of userDie) {
+      for (let e of enemyDie) {
+        if (u > e) win++;
+        else if (u === e) tie++;
+        else loss++;
+      }
+    }
+
+    const total = userDie.length * enemyDie.length;
+
+    return {
+      win: ((win / total) * 100).toFixed(1),
+      tie: ((tie / total) * 100).toFixed(1),
+      loss: ((loss / total) * 100).toFixed(1),
+    };
   }
 
   async function handleChallenge() {
@@ -78,8 +102,6 @@ export function ChallengePanel({
       }
     }
   }
-
-  const displayDie = challenger.die || placeholderDie;
 
   return (
     <div className="popup" onClick={onClose}>
@@ -154,10 +176,27 @@ export function ChallengePanel({
           </div>
         )}
 
+        {userRoll == null &&
+        <div>
+          <br />
+          <span>Odds: </span>
+          <span style = {{color: "green", marginRight: "10px"}}>
+            {odds.win}%
+          </span>
+          <span style = {{color: "gray", marginRight: "10px"}}>
+            {odds.tie}%
+          </span>
+          <span style = {{color: "red", marginRight: "10px"}}>
+            {odds.loss}%
+          </span>
+          <br />
+        </div>}
+
         <br />
         <div style={{ display: "flex", gap: "10px" }}>
           <button onClick={onClose}>Close</button>
-          {userRoll == null && <button onClick={handleChallenge}>Challenge</button>}
+          {userRoll == null && !displayDie.every(val => val === 0) 
+          && <button onClick={handleChallenge}>Challenge</button>}
         </div>
       </div>
     </div>
