@@ -8,31 +8,34 @@ export function ChallengePanel({
   streak,
   setStreak,
   maxStreak,
-  setMaxStreak
+  setMaxStreak,
+  challenger,
+  setChallenger
 }) {
   const [userRoll, setUserRoll] = useState(null);
   const [enemyRoll, setEnemyRoll] = useState(null);
-  const [challenger, setChallenger] = useState({ username: "opponent", die: [0,0,0,0,0,0] });
   const placeholderDie = [0,0,0,0,0,0]
   const displayDie = challenger.die || placeholderDie;
   const odds = calculateOdds(faces, displayDie);
 
-  useEffect(() => {
-    async function fetchChallenger() {
-      try {
+  async function fetchNewChallenger(currentChallengerId) {
+    try {
+      let newChallenger = null;
+
+      do {
         const res = await fetch("/api/dice", {
           method: "GET",
           credentials: "include"
         });
         const data = await res.json();
-        setChallenger(data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
+        newChallenger = data;
+      } while (currentChallengerId && newChallenger.id === currentChallengerId);
 
-    fetchChallenger();
-  }, []);
+      setChallenger(newChallenger);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   function rollDie(die) {
     const index = Math.floor(Math.random() * 6);
@@ -113,7 +116,7 @@ export function ChallengePanel({
             {challenger.username}'s die
             <div className="centerdiv">
               <br />
-              <table className="center" style={{ margin: "auto" }}>
+              <table className="center" style={{ margin: "auto", width: "90%" }}>
                 <tbody>
                   <tr>
                     <td></td>
@@ -195,8 +198,12 @@ export function ChallengePanel({
         <br />
         <div style={{ display: "flex", gap: "10px" }}>
           <button onClick={onClose}>Close</button>
-          {userRoll == null && !displayDie.every(val => val === 0) 
-          && <button onClick={handleChallenge}>Challenge</button>}
+          {userRoll == null && !displayDie.every(val => val === 0) && 
+            <>
+            <button onClick={fetchNewChallenger}>New Opponent</button>
+            <button onClick={handleChallenge}>Challenge</button>
+            </>
+          }
         </div>
       </div>
     </div>

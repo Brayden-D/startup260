@@ -13,6 +13,7 @@ export function Home({ loggedInUser }) {
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
   const [notifications, setNotifications] = useState([]);
+  const [challenger, setChallenger] = useState(null);
 
   useEffect(() => {
     if (!loggedInUser) return;
@@ -52,6 +53,19 @@ export function Home({ loggedInUser }) {
 
   }, [loggedInUser]);
 
+  async function fetchChallenger() {
+    try {
+      const res = await fetch("/api/dice", {
+        method: "GET",
+        credentials: "include"
+      });
+      const data = await res.json();
+      setChallenger(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   const addNotification = (text) => {
     setNotifications((prev) => {
       const updated = [...prev, { id: Date.now(), text }];
@@ -64,6 +78,10 @@ export function Home({ loggedInUser }) {
       prev.filter((notif) => notif.id !== id)
     );
   };
+
+  useEffect(() => {
+    fetchChallenger();
+  }, []);
 
   useEffect(() => {
       function handleGameEvent(event) {
@@ -315,6 +333,8 @@ export function Home({ loggedInUser }) {
         setStreak = {setStreak}
         maxStreak = {maxStreak}
         setMaxStreak = {setMaxStreak}
+        challenger = {challenger}
+        setChallenger = {setChallenger}
       />}
 
 
