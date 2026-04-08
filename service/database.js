@@ -120,6 +120,34 @@ async function getUserScore(username) {
   return user?.score;
 }
 
+async function updateUserElo(username, newElo) {
+  await userCollection.updateOne(
+    { username },
+    { $set: { elo: newElo } }
+  );
+
+  await scoreCollection.updateOne(
+    { username },
+    { $set: { elo: newElo } }
+  );
+
+  return { username, elo: newElo };
+}
+
+async function getUserElo(username) {
+  const user = await getUser(username);
+  return user?.elo ?? null;
+}
+
+async function getElos() {
+  const query = {};
+  const options = {
+    sort: { elo: -1 },
+    limit: 50,
+  };
+
+  return scoreCollection.find(query, options).toArray();
+}
 
 module.exports = {
   getUser,

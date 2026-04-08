@@ -128,6 +128,21 @@ apiRouter.get('/score', verifyAuth, async (req, res) => {
   res.send(user.score);
 });
 
+// GetElos
+apiRouter.get('/elos', verifyAuth, async (_req, res) => {
+  const elos = await DB.getElos();
+  res.send(elos);
+});
+
+// SetUserElo
+apiRouter.post('/elo', verifyAuth, async (req, res) => {
+  const score = await DB.updateUserElo({
+    username: req.user.username,
+    score: req.body.score
+  });
+
+  res.send(score);
+});
 
 // Default error handler
 app.use(function (err, req, res, next) {
