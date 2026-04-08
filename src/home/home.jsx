@@ -12,6 +12,7 @@ export function Home({ loggedInUser }) {
   const [faces, setFaces] = useState([1, 2, 3, 4, 5, 6]);
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
+  const [elo, setElo] = useState(100)
   const [notifications, setNotifications] = useState([]);
   const [challenger, setChallenger] = useState(null);
 
@@ -20,12 +21,16 @@ export function Home({ loggedInUser }) {
 
     async function loadUserData() {
       try {
-        const [scoreRes, dieRes] = await Promise.all([
+        const [scoreRes, dieRes, eloRes] = await Promise.all([
           fetch("/api/score", {
             method: "GET",
             credentials: "include"
           }),
           fetch("/api/die", {
+            method: "GET",
+            credentials: "include"
+          }),
+          fetch("/api/elo", {
             method: "GET",
             credentials: "include"
           })
@@ -42,6 +47,11 @@ export function Home({ loggedInUser }) {
           if (data?.die) {
             setFaces(data.die);
           }
+        }
+
+        if (eloRes.ok) {
+          const userElo = await eloRes.json();
+          setElo(userElo);
         }
 
       } catch (err) {
@@ -311,6 +321,8 @@ export function Home({ loggedInUser }) {
                       <b>Current Streak: {streak}</b>
                       <br />
                       <b>Best Streak: {maxStreak}</b>
+                      <br />
+                      <b>Rating: {elo}</b>
                   </div>
                 </td>
               </tr>
